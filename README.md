@@ -1,4 +1,4 @@
-Name Entity Recognition
+Name Entity Recognition  (NER) System
 ========
 by Magnus Settemsli Mogstad and John-Olav Storvold
 
