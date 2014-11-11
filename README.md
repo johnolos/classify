@@ -2,6 +2,12 @@ Name Entity Recognition  (NER) System
 ========
 by Magnus Settemsli Mogstad and John-Olav Storvold
 
+#Which approach to use?
+##Sequence model approach to NER
+### https://class.coursera.org/nlp/lecture/59
+##Hidden markov model approach to NER
+##Maximum Entropy markov model
+
 Milestones:
 ==
 
