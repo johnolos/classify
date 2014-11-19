@@ -4,28 +4,25 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import entities.Entities;
+
 public class ReadFile {
-	ArrayList<String> words;
-	ArrayList<String> entity;
+	HashMap<String, Entities> classification;
 	String filepath;
 	
 	public ReadFile(String path) {
-		entity = new ArrayList<String>();
-		words = new ArrayList<String>();
+		classification = new HashMap<String, Entities>();
 		this.filepath = path;
 		getWordsFromFile();
-		printwords();
 	}
 	
-	private void printwords() {
-		for(int i=0;i<words.size();i++) {
-			System.out.println(i);
-			System.out.println(words.get(i));
-			System.out.println(entity.get(i));
-		}
+	private void printwords(String word) {
+		System.out.println(classification.size());
+		System.out.println(word);
+		System.out.println(classification.get(word));
 	}
 
 	private void getWordsFromFile() {
@@ -37,13 +34,31 @@ public class ReadFile {
 			while(line != null) {
 				StringTokenizer token = new StringTokenizer(line, " ");
 				while(token.hasMoreTokens()) {
-					this.words.add(token.nextElement().toString());
-					this.entity.add(token.nextElement().toString());
+					String word = token.nextElement().toString();
+					String ent = token.nextElement().toString();
+					switch (ent) {
+					case "O":
+						classification.put(word, Entities.OTHER);
+						break;
+					case "PER":
+						classification.put(word, Entities.PERSON);
+						break;
+					case "ORG":
+						classification.put(word, Entities.ORGAINIZATION);
+						break;
+					case "T":
+						classification.put(word, Entities.TIME);
+						break;
+					case "C":
+						classification.put(word, Entities.COUNTRY);
+						break;
+					default:
+						break;
+					}
+					printwords(word);
 				}
 				line = bufferedReader.readLine();
 			}
-			
-			
 			bufferedReader.close();
 			fileReader.close();
 		} catch (FileNotFoundException e) {
@@ -57,13 +72,4 @@ public class ReadFile {
 			System.out.println("Something went wrong");
 		}
 	}
-	
-	public ArrayList<String> getWords() {
-		return this.words;
-	}
-	
-	public ArrayList<String> getEntitys() {
-		return this.entity;
-	}
-
 }
