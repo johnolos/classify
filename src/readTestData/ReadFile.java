@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -11,14 +12,18 @@ import entities.Entities;
 
 public class ReadFile {
 	HashMap<String, Entities> classification;
+//	ArrayList<String> words, entit;
 	String filepath;
 	
 	public ReadFile(String path) {
-		classification = new HashMap<String, Entities>();
+//		this.words = new ArrayList<String>();
+//		this.entit = new ArrayList<String>();
+		this.classification = new HashMap<String, Entities>();
 		this.filepath = path;
 		getWordsFromFile();
 	}
 	
+	@SuppressWarnings("unused")
 	private void printwords(String word) {
 		System.out.println(classification.size());
 		System.out.println(word);
@@ -36,26 +41,10 @@ public class ReadFile {
 				while(token.hasMoreTokens()) {
 					String word = token.nextElement().toString();
 					String ent = token.nextElement().toString();
-					switch (ent) {
-					case "O":
-						classification.put(word, Entities.OTHER);
-						break;
-					case "PER":
-						classification.put(word, Entities.PERSON);
-						break;
-					case "ORG":
-						classification.put(word, Entities.ORGAINIZATION);
-						break;
-					case "T":
-						classification.put(word, Entities.TIME);
-						break;
-					case "C":
-						classification.put(word, Entities.COUNTRY);
-						break;
-					default:
-						break;
-					}
-					printwords(word);
+//					this.words.add(word);
+//					this.entit.add(ent);
+					classification.put(word, Entities.getEntity(ent));
+//					printwords(word);
 				}
 				line = bufferedReader.readLine();
 			}
@@ -71,5 +60,8 @@ public class ReadFile {
 			e.printStackTrace();
 			System.out.println("Something went wrong");
 		}
+	}
+	public HashMap<String, Entities> getHashMap() {
+		return this.classification;
 	}
 }
