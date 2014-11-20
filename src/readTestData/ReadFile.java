@@ -54,8 +54,8 @@ public class ReadFile {
 			e.printStackTrace();
 			System.out.println("Cannot find file");
 		} catch(IOException e) {
-			System.out.println("IO exception");
 			e.printStackTrace();
+			System.out.println("IO exception");
 		}  catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Something went wrong");
