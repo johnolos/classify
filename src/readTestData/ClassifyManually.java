@@ -19,16 +19,16 @@ import java.util.Scanner;
 
 import org.jsoup.Jsoup;
 
-import entities.Entities;
+import entities.Entity;
 
 public class ClassifyManually {
 	
-	Map<String, Entities> classifiedWords;
+	Map<String, Entity> classifiedWords;
 	BufferedReader in;
 	
 	public ClassifyManually(File file) {
 		try {
-			classifiedWords = new HashMap<String, Entities>();
+			classifiedWords = new HashMap<String, Entity>();
 			in = new BufferedReader(new FileReader(file));
 			Scanner user = new Scanner(System.in);
 			classifyWords(getWords(false), user);
@@ -42,7 +42,7 @@ public class ClassifyManually {
 	
 	public ClassifyManually(URL url) {
 		try {
-			classifiedWords = new HashMap<String, Entities>();
+			classifiedWords = new HashMap<String, Entity>();
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			Scanner user = new Scanner(System.in);
 			classifyWords(getWords(true), user);
@@ -72,19 +72,19 @@ public class ClassifyManually {
 			String input = user.nextLine();
 			if(input.equals("exit"))
 				break;
-			Entities entity = Entities.getEntity(input);
+			Entity entity = Entity.getEntity(input);
 			classifiedWords.put(word, entity);
 		}
 	}
 
-	public static void writeClassifiedWord(Map<String, Entities> map, Scanner user) 
+	public static void writeClassifiedWord(Map<String, Entity> map, Scanner user) 
 			throws FileNotFoundException, UnsupportedEncodingException {
 		System.out.println("Filename: ");
 		String filename = user.nextLine();
 		if (filename.equals("exit"))
 			return;
 		PrintWriter writer = new PrintWriter(filename, "UTF-8");
-		for(Map.Entry<String, Entities> entry : map.entrySet()) {
+		for(Map.Entry<String, Entity> entry : map.entrySet()) {
 			writer.println(entry.getKey() + " " + entry.getValue());
 		}
 		writer.close();

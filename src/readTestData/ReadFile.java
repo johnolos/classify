@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-import entities.Entities;
+import entities.Entity;
 
 public class ReadFile {
-	HashMap<String, Entities> classification;
+	HashMap<String, Entity> classification;
 //	ArrayList<String> words, entit;
 	String filepath;
 	
 	public ReadFile(String path) {
 //		this.words = new ArrayList<String>();
 //		this.entit = new ArrayList<String>();
-		this.classification = new HashMap<String, Entities>();
+		this.classification = new HashMap<String, Entity>();
 		this.filepath = path;
 		getWordsFromFile();
 	}
@@ -43,7 +43,7 @@ public class ReadFile {
 					String ent = token.nextElement().toString();
 //					this.words.add(word);
 //					this.entit.add(ent);
-					classification.put(word, Entities.getEntity(ent));
+					classification.put(word, Entity.getEntity(ent));
 //					printwords(word);
 				}
 				line = bufferedReader.readLine();
@@ -61,7 +61,7 @@ public class ReadFile {
 			System.out.println("Something went wrong");
 		}
 	}
-	public HashMap<String, Entities> getHashMap() {
+	public HashMap<String, Entity> getHashMap() {
 		return this.classification;
 	}
 }
