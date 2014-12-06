@@ -12,12 +12,13 @@ import entities.Entity;
 
 public class ReadFile {
 	HashMap<String, Entity> classification;
-//	ArrayList<String> words, entit;
+	ArrayList<String> words; 
+	ArrayList<Entity> entit;
 	String filepath;
 	
 	public ReadFile(String path) {
-//		this.words = new ArrayList<String>();
-//		this.entit = new ArrayList<String>();
+		this.words = new ArrayList<String>();
+		this.entit = new ArrayList<Entity>();
 		this.classification = new HashMap<String, Entity>();
 		this.filepath = path;
 		getWordsFromFile();
@@ -41,8 +42,8 @@ public class ReadFile {
 				while(token.hasMoreTokens()) {
 					String word = token.nextElement().toString();
 					String ent = token.nextElement().toString();
-//					this.words.add(word);
-//					this.entit.add(ent);
+					this.words.add(word);
+					this.entit.add(Entity.getEntity(ent));
 					classification.put(word, Entity.getEntity(ent));
 //					printwords(word);
 				}
@@ -63,5 +64,13 @@ public class ReadFile {
 	}
 	public HashMap<String, Entity> getHashMap() {
 		return this.classification;
+	}
+	
+	public ArrayList<Entity> getEntityList() {
+		return this.entit;
+	}
+	
+	public ArrayList<String> getWordList() {
+		return this.words;
 	}
 }

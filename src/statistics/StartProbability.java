@@ -1,14 +1,16 @@
 package statistics;
 
+import java.util.ArrayList;
+
+import entities.Entity;
+
 public class StartProbability {
-	private double startProb;
+	private ArrayList<String> words;
+	private ArrayList<Entity> entity;
 	
-	public void setStartProb(int tag, int total) {
-		this.startProb = tag/total;
+	public StartProbability(ArrayList<String> w,ArrayList<Entity> e) {
+		this.words=w;
+		this.entity=e;
 	}
-	
-	public double getStartProbability() {
-		return this.startProb;
-	}
-	
+
 }
