@@ -1,9 +1,8 @@
 package statistics;
 
 public class CalculateProbablity {
-	private int counter;
-	private int total;
-	private double prob;
+	private double counter;
+	private double total;
 	
 	public void setCounter(int i) {
 		this.counter=i;
@@ -13,20 +12,17 @@ public class CalculateProbablity {
 		this.total=i;
 	}
 	
-	public int getCounter() {
+	public double getCounter() {
 		return this.counter;
 	}
 	
-	public int getTotal() {
+	public double getTotal() {
 		return this.total;
 	}
 	
-	public void calculateProbability() {
-		this.prob=counter/total;
+	public double getCalculatedProbability() {
+		return (double)(this.counter/this.total);
 	}
 	
-	public double getProbability() {
-		return this.prob;
-	}
 
 }

@@ -44,6 +44,9 @@ public class ReadFile {
 					String ent = token.nextElement().toString();
 					this.words.add(word);
 					this.entit.add(Entity.getEntity(ent));
+					if(isLastWord(word)) {
+						word = removeDot(word);
+					}
 					classification.put(word, Entity.getEntity(ent));
 //					printwords(word);
 				}
@@ -62,6 +65,18 @@ public class ReadFile {
 			System.out.println("Something went wrong");
 		}
 	}
+	private boolean isLastWord(String word) {
+		String temp = word.substring(word.length()-1, word.length());
+		if(temp.equals(".")) {
+			return true;
+		}
+		return false;
+	}
+
+	private String removeDot(String word) {
+		return word.substring(0, word.length()-1).trim();
+	}
+
 	public HashMap<String, Entity> getHashMap() {
 		return this.classification;
 	}
