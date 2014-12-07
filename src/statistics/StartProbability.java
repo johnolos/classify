@@ -13,12 +13,12 @@ public class StartProbability {
 	private int sentences;
 	int other,person,time,organization,country;
 	
-	public StartProbability(ArrayList<String> w,ArrayList<Entity> e) {
-		this.words=w;
-		this.entity=e;
-		startProb = new HashMap<Entity, Double>();
-		newSentence=true;
-		sentences=0;
+	public StartProbability(ArrayList<String> words,ArrayList<Entity> entity) {
+		this.words=words;
+		this.entity=entity;
+		this.startProb = new HashMap<Entity, Double>();
+		this.newSentence=true;
+		this.sentences=0;
 		getNumbersToCalculate();
 		calculate();
 //		printProb();

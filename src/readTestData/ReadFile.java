@@ -62,7 +62,7 @@ public class ReadFile {
 			System.out.println("IO exception");
 		}  catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("Something went wrong");
+			System.out.println("Something went wrong, are you shure every word has an entity supportet?");
 		}
 	}
 	private boolean isLastWord(String word) {
