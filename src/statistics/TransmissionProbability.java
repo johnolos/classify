@@ -11,21 +11,41 @@ import com.google.common.collect.Table;
 
 import entities.Entity;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TransmissionProbability.
+ */
 public class TransmissionProbability {
 	
+	/** The trans prob. */
 	private Table<Entity, Entity, Float> transProb; // Transmission Probability
+	
+	/** The file. */
 	private ReadFile file;
 	
+	/**
+	 * Instantiates a new transmission probability.
+	 *
+	 * @param path the path
+	 */
 	public TransmissionProbability(String path) {
 		file = new ReadFile(path);
 		transProb = HashBasedTable.create();
 	}
 	
+	/**
+	 * Instantiates a new transmission probability.
+	 *
+	 * @param file the file
+	 */
 	public TransmissionProbability(ReadFile file) {
 		this.file = file;
 		transProb = HashBasedTable.create();
 	}
 	
+	/**
+	 * Run transmission probabilistic.
+	 */
 	public void runTransmissionProbabilistic() {
 		List<Entity> entity = file.getEntityList();
 		List<Entity> states = Arrays.asList(Entity.values());
@@ -37,6 +57,14 @@ public class TransmissionProbability {
 		}
 	}
 	
+	/**
+	 * Find entity combination freq.
+	 *
+	 * @param first the first
+	 * @param second the second
+	 * @param list the list
+	 * @return the float
+	 */
 	public float findEntityCombinationFreq(Entity first, Entity second, List<Entity> list) {
 		Iterator itr = list.iterator();
 		int freq = 0;
@@ -58,7 +86,18 @@ public class TransmissionProbability {
 		return (float)freq / (float)total;
 	}
 	
+	/**
+	 * Gets the table.
+	 *
+	 * @return the table
+	 */
 	public Table<Entity, Entity, Float> getTable() {return this.transProb;}
+	
+	/**
+	 * Gets the file.
+	 *
+	 * @return the file
+	 */
 	public ReadFile getFile() {return this.file;}
 	
 	/**

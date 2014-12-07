@@ -21,11 +21,23 @@ import org.jsoup.Jsoup;
 
 import entities.Entity;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ClassifyManually.
+ */
 public class ClassifyManually {
 	
+	/** The classified words. */
 	Map<String, Entity> classifiedWords;
+	
+	/** The in. */
 	BufferedReader in;
 	
+	/**
+	 * Instantiates a new classify manually.
+	 *
+	 * @param file the file
+	 */
 	public ClassifyManually(File file) {
 		try {
 			classifiedWords = new HashMap<String, Entity>();
@@ -40,6 +52,11 @@ public class ClassifyManually {
 		}
 	}
 	
+	/**
+	 * Instantiates a new classify manually.
+	 *
+	 * @param url the url
+	 */
 	public ClassifyManually(URL url) {
 		try {
 			classifiedWords = new HashMap<String, Entity>();
@@ -52,6 +69,13 @@ public class ClassifyManually {
 		}
 	}
 	
+	/**
+	 * Gets the words.
+	 *
+	 * @param html the html
+	 * @return the words
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public List<String> getWords(boolean html) throws IOException {
 		String line;
 		List<String> words = new ArrayList<String>();
@@ -64,6 +88,12 @@ public class ClassifyManually {
 		return words;
 	}
 	
+	/**
+	 * Classify words.
+	 *
+	 * @param words the words
+	 * @param user the user
+	 */
 	public void classifyWords(List<String> words, Scanner user) {
 		for(String word : words) {
 			if(word.equals(""))
@@ -77,6 +107,14 @@ public class ClassifyManually {
 		}
 	}
 
+	/**
+	 * Write classified word.
+	 *
+	 * @param map the map
+	 * @param user the user
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 */
 	public static void writeClassifiedWord(Map<String, Entity> map, Scanner user) 
 			throws FileNotFoundException, UnsupportedEncodingException {
 		System.out.println("Filename: ");
@@ -90,6 +128,11 @@ public class ClassifyManually {
 		writer.close();
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		try {
 			URL u = new URL("http://en.wikipedia.org/wiki/Point_in_polygon");

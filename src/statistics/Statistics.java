@@ -44,5 +44,4 @@ public class Statistics {
 	public double getErrorRate() {
 		return this.errorRate;
 	}
-
 }

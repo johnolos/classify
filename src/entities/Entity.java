@@ -1,18 +1,47 @@
 package entities;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Enum Entity.
+ */
 public enum Entity {
-	OTHER("O"),PERSON("PER"),ORGAINIZATION("ORG"),TIME("T"),COUNTRY("C");
 	
+	/** The other. */
+	OTHER("O"),
+	/** The person. */
+	PERSON("PER"),
+	/** The orgainization. */
+	ORGAINIZATION("ORG"),
+	/** The time. */
+	TIME("T"),
+	/** The country. */
+	COUNTRY("C");
+	
+	/** The entity. */
 	String entity;
 	
+	/**
+	 * Instantiates a new entity.
+	 *
+	 * @param entity the entity
+	 */
 	Entity(String entity) {
 		this.entity = entity;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Enum#toString()
+	 */
 	public String toString() {
 		return entity;
 	}
 	
+	/**
+	 * Gets the entity.
+	 *
+	 * @param type the type
+	 * @return the entity
+	 */
 	public static Entity getEntity(String type) {
 		switch(type) {
 		case "O": return Entity.OTHER;
@@ -23,5 +52,4 @@ public enum Entity {
 		default: return Entity.OTHER;
 		}
 	}
-	
 }

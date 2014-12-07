@@ -5,14 +5,36 @@ import java.util.HashMap;
 
 import entities.Entity;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StartProbability.
+ */
 public class StartProbability {
+	
+	/** The words. */
 	private ArrayList<String> words;
+	
+	/** The entity. */
 	private ArrayList<Entity> entity;
+	
+	/** The start prob. */
 	private HashMap<Entity, Double> startProb;
+	
+	/** The new sentence. */
 	private boolean newSentence;
+	
+	/** The sentences. */
 	private int sentences;
+	
+	/** The country. */
 	int other,person,time,organization,country;
 	
+	/**
+	 * Instantiates a new start probability.
+	 *
+	 * @param words the words
+	 * @param entity the entity
+	 */
 	public StartProbability(ArrayList<String> words,ArrayList<Entity> entity) {
 		this.words=words;
 		this.entity=entity;
@@ -24,6 +46,9 @@ public class StartProbability {
 //		printProb();
 	}
 	
+	/**
+	 * Prints the prob.
+	 */
 	private void printProb() {
 		System.out.println("C: " + startProb.get(Entity.COUNTRY));
 		System.out.println("O: " + startProb.get(Entity.OTHER));
@@ -33,6 +58,9 @@ public class StartProbability {
 		
 	}
 
+	/**
+	 * Calculate.
+	 */
 	private void calculate() {
 		CalculateProbablity prob = new CalculateProbablity();
 		prob.setTotal(sentences);
@@ -51,6 +79,11 @@ public class StartProbability {
 		startProb.put(Entity.COUNTRY, prob.getCalculatedProbability());
 	}
 
+	/**
+	 * Gets the numbers to calculate.
+	 *
+	 * @return the numbers to calculate
+	 */
 	private void getNumbersToCalculate() {
 		for(int i=0; i<this.words.size();i++) {
 //			System.out.println(words.size());
@@ -87,6 +120,12 @@ public class StartProbability {
 		}
 	}
 
+	/**
+	 * Checks if is lastword.
+	 *
+	 * @param word the word
+	 * @return true, if is lastword
+	 */
 	private boolean isLastword(String word) {
 		String temp = word.substring(word.length()-1, word.length());
 //		System.out.println("temp: "+temp);
@@ -97,6 +136,11 @@ public class StartProbability {
 		return false;
 	}
 	
+	/**
+	 * Gets the start probability.
+	 *
+	 * @return the start probability
+	 */
 	public HashMap<Entity, Double> getStartProbability() {
 		return this.startProb;
 	}

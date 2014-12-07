@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package readTestData;
 
 import java.io.BufferedReader;
@@ -10,12 +13,29 @@ import java.util.StringTokenizer;
 
 import entities.Entity;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ReadFile.
+ */
 public class ReadFile {
+	
+	/** The classification. */
 	HashMap<String, Entity> classification;
+	
+	/** The words. */
 	ArrayList<String> words; 
+	
+	/** The entit. */
 	ArrayList<Entity> entit;
+	
+	/** The filepath. */
 	String filepath;
 	
+	/**
+	 * Instantiates a new read file.
+	 *
+	 * @param path the path
+	 */
 	public ReadFile(String path) {
 		this.words = new ArrayList<String>();
 		this.entit = new ArrayList<Entity>();
@@ -24,6 +44,11 @@ public class ReadFile {
 		getWordsFromFile();
 	}
 	
+	/**
+	 * Printwords.
+	 *
+	 * @param word the word
+	 */
 	@SuppressWarnings("unused")
 	private void printwords(String word) {
 		System.out.println(classification.size());
@@ -31,6 +56,11 @@ public class ReadFile {
 		System.out.println(classification.get(word));
 	}
 
+	/**
+	 * Gets the words from file.
+	 *
+	 * @return the words from file
+	 */
 	private void getWordsFromFile() {
 		try {
 			FileReader fileReader = new FileReader(this.filepath);
@@ -65,6 +95,13 @@ public class ReadFile {
 			System.out.println("Something went wrong, are you shure every word has an entity supportet?");
 		}
 	}
+	
+	/**
+	 * Checks if is last word.
+	 *
+	 * @param word the word
+	 * @return true, if is last word
+	 */
 	private boolean isLastWord(String word) {
 		String temp = word.substring(word.length()-1, word.length());
 		if(temp.equals(".")) {
@@ -73,18 +110,39 @@ public class ReadFile {
 		return false;
 	}
 
+	/**
+	 * Removes the dot.
+	 *
+	 * @param word the word
+	 * @return the string
+	 */
 	private String removeDot(String word) {
 		return word.substring(0, word.length()-1).trim();
 	}
 
+	/**
+	 * Gets the hash map.
+	 *
+	 * @return the hash map
+	 */
 	public HashMap<String, Entity> getHashMap() {
 		return this.classification;
 	}
 	
+	/**
+	 * Gets the entity list.
+	 *
+	 * @return the entity list
+	 */
 	public ArrayList<Entity> getEntityList() {
 		return this.entit;
 	}
 	
+	/**
+	 * Gets the word list.
+	 *
+	 * @return the word list
+	 */
 	public ArrayList<String> getWordList() {
 		return this.words;
 	}
