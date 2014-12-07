@@ -12,7 +12,6 @@ import com.google.common.collect.Table;
 import entities.Entity;
 
 public class TransmissionProbability {
-	// Just a skeleton to give an example how the class will look.
 	
 	private Table<Entity, Entity, Float> transProb; // Transmission Probability
 	private ReadFile file;
@@ -29,18 +28,9 @@ public class TransmissionProbability {
 	
 	public void runTransmissionProbabilistic() {
 		List<Entity> entity = file.getEntityList();
-		List<String> words = file.getWordList();
 		List<Entity> states = Arrays.asList(Entity.values());
-		for(int i = 0; i < entity.size(); i++) {
-			System.out.println("Word " + words.get(i) + " ,Entity " + entity.get(i));
-		}
 		for(Entity state : states) {
 			for(Entity other: states) {
-				/**
-				 * TODO:	Paper says not to do probability for compare 
-				 * 			state == other.
-				 * 			It seems like they do anyway.
-				 */
 				float prob = findEntityCombinationFreq(state, other, entity);
 				transProb.put(state, other, prob);
 			}
