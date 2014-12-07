@@ -13,7 +13,6 @@ import java.util.StringTokenizer;
 
 import entities.Entity;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ReadFile.
  */
@@ -55,6 +54,7 @@ public class ReadFileTraining {
 	/**
 	 * Gets the words from file.
 	 *
+	 * @param path the path
 	 * @return the words from file
 	 */
 	private void getWordsFromFile(String path) {
@@ -92,14 +92,30 @@ public class ReadFileTraining {
 		}
 	}
 	
+	/**
+	 * Adds the classification.
+	 *
+	 * @param word the word
+	 * @param entity the entity
+	 */
 	private void addClassification(String word, Entity entity) {
 		this.classification.put(word, entity);
 	}
 	
+	/**
+	 * Adds the entity.
+	 *
+	 * @param entity the entity
+	 */
 	private void addEntity(String entity) {
 		this.entit.add(Entity.getEntity(entity));	
 	}
 
+	/**
+	 * Adds the word.
+	 *
+	 * @param word the word
+	 */
 	private void addWord(String word) {
 		this.words.add(word);
 	}

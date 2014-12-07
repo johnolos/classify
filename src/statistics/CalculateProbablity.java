@@ -1,6 +1,5 @@
 package statistics;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CalculateProbablity.
  */

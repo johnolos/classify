@@ -4,14 +4,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import readTestData.ReadFile;
+import readData.ReadFileTraining;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 import entities.Entity;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TransmissionProbability.
  */
@@ -21,7 +20,7 @@ public class TransmissionProbability {
 	private Table<Entity, Entity, Float> transProb; // Transmission Probability
 	
 	/** The file. */
-	private ReadFile file;
+	private ReadFileTraining file;
 	
 	/**
 	 * Instantiates a new transmission probability.
@@ -29,7 +28,7 @@ public class TransmissionProbability {
 	 * @param path the path
 	 */
 	public TransmissionProbability(String path) {
-		file = new ReadFile(path);
+		file = new ReadFileTraining(path);
 		transProb = HashBasedTable.create();
 	}
 	
@@ -38,7 +37,7 @@ public class TransmissionProbability {
 	 *
 	 * @param file the file
 	 */
-	public TransmissionProbability(ReadFile file) {
+	public TransmissionProbability(ReadFileTraining file) {
 		this.file = file;
 		transProb = HashBasedTable.create();
 	}
@@ -98,7 +97,7 @@ public class TransmissionProbability {
 	 *
 	 * @return the file
 	 */
-	public ReadFile getFile() {return this.file;}
+	public ReadFileTraining getFile() {return this.file;}
 	
 	/**
 	Test the code

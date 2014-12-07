@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import entities.Entity;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class StartProbability.
  */
@@ -43,9 +42,9 @@ public class StartProbability {
 		this.sentences=0;
 		getNumbersToCalculate();
 		calculate();
-//		printProb();
+		printProb();
 	}
-	
+
 	/**
 	 * Prints the prob.
 	 */
@@ -88,28 +87,29 @@ public class StartProbability {
 		for(int i=0; i<this.words.size();i++) {
 //			System.out.println(words.size());
 			if(newSentence) {
-//				System.out.println("JEG ER HER"+i);
-//				System.out.println(words.get(i));
 				sentences++;
+//				System.out.println("JEG ER HER"+i);
+//				System.out.println(entity.get(i));
+				System.out.println(words.get(i));
 				switch (entity.get(i)) {
 				case PERSON:
-//					System.out.println("P");
+					System.out.println("P");
 					person++;
 					break;
 				case TIME:
-//					System.out.println("T");
+					System.out.println("T");
 					time++;
 					break;
 				case ORGAINIZATION:
-//					System.out.println("ORG");
+					System.out.println("ORG");
 					organization++;
 					break;
 				case COUNTRY:
-//					System.out.println("C");
+					System.out.println("C");
 					country++;
 					break;
 				default:
-//					System.out.println("O");
+					System.out.println("O");
 					other++;
 				}
 			}

@@ -5,7 +5,6 @@ import readData.ReadFileTraining;
 import statistics.EmissionProbability;
 import statistics.StartProbability;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Main.
  */
@@ -17,13 +16,11 @@ public class Main {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
 		ReadFileTraining read = new ReadFileTraining("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test2.txt");
 		System.out.println("Start");
 		StartProbability prob = new StartProbability(read.getWordList(), read.getEntityList());
 		System.out.println("Emission");
 		EmissionProbability emi = new EmissionProbability(read.getEntityList(), read.getWordList());
-		
 		System.out.println("Classify this");
 		ReadFileToClassify classificationFile = new ReadFileToClassify("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test3.txt");
 	}

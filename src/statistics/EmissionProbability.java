@@ -7,7 +7,6 @@ import com.google.common.collect.Table;
 
 import entities.Entity;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class EmissionProbability.
  */
@@ -39,7 +38,7 @@ public class EmissionProbability {
 		calc.setTotal(words.size());
 //		System.out.println("TOTAL; " + words.size());
 		calculateEmission();
-//		printEmission();
+		printEmission();
 	}
 	
 	

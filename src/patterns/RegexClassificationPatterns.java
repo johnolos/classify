@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import readTestData.ReadFile;
+import readData.ReadFileTraining;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class RegexClassificationPatterns.
  */

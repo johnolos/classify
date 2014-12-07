@@ -1,6 +1,5 @@
 package entities;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Enum Entity.
  */
