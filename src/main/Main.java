@@ -1,6 +1,7 @@
 package main;
 
-import readTestData.ReadFile;
+import readData.ReadFileToClassify;
+import readData.ReadFileTraining;
 import statistics.EmissionProbability;
 import statistics.StartProbability;
 
@@ -17,8 +18,13 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
-		ReadFile read = new ReadFile("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test2.txt");
+		ReadFileTraining read = new ReadFileTraining("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test2.txt");
+		System.out.println("Start");
 		StartProbability prob = new StartProbability(read.getWordList(), read.getEntityList());
+		System.out.println("Emission");
 		EmissionProbability emi = new EmissionProbability(read.getEntityList(), read.getWordList());
+		
+		System.out.println("Classify this");
+		ReadFileToClassify classificationFile = new ReadFileToClassify("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test3.txt");
 	}
 }

@@ -1,7 +1,7 @@
 /*
  * 
  */
-package readTestData;
+package readData;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ import entities.Entity;
 /**
  * The Class ReadFile.
  */
-public class ReadFile {
+public class ReadFileTraining {
 	
 	/** The classification. */
 	HashMap<String, Entity> classification;
@@ -28,20 +28,16 @@ public class ReadFile {
 	/** The entit. */
 	ArrayList<Entity> entit;
 	
-	/** The filepath. */
-	String filepath;
-	
 	/**
 	 * Instantiates a new read file.
 	 *
 	 * @param path the path
 	 */
-	public ReadFile(String path) {
+	public ReadFileTraining(String path) {
 		this.words = new ArrayList<String>();
 		this.entit = new ArrayList<Entity>();
 		this.classification = new HashMap<String, Entity>();
-		this.filepath = path;
-		getWordsFromFile();
+		getWordsFromFile(path);
 	}
 	
 	/**
@@ -61,9 +57,9 @@ public class ReadFile {
 	 *
 	 * @return the words from file
 	 */
-	private void getWordsFromFile() {
+	private void getWordsFromFile(String path) {
 		try {
-			FileReader fileReader = new FileReader(this.filepath);
+			FileReader fileReader = new FileReader(path);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line = bufferedReader.readLine();
 			
@@ -72,12 +68,12 @@ public class ReadFile {
 				while(token.hasMoreTokens()) {
 					String word = token.nextElement().toString();
 					String ent = token.nextElement().toString();
-					this.words.add(word);
-					this.entit.add(Entity.getEntity(ent));
+					addWord(word);
+					addEntity(ent);					
 					if(isLastWord(word)) {
 						word = removeDot(word);
 					}
-					classification.put(word, Entity.getEntity(ent));
+					addClassification(word,Entity.getEntity(ent));
 //					printwords(word);
 				}
 				line = bufferedReader.readLine();
@@ -96,6 +92,18 @@ public class ReadFile {
 		}
 	}
 	
+	private void addClassification(String word, Entity entity) {
+		this.classification.put(word, entity);
+	}
+	
+	private void addEntity(String entity) {
+		this.entit.add(Entity.getEntity(entity));	
+	}
+
+	private void addWord(String word) {
+		this.words.add(word);
+	}
+
 	/**
 	 * Checks if is last word.
 	 *
