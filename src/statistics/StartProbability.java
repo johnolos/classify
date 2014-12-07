@@ -42,7 +42,7 @@ public class StartProbability {
 		this.sentences=0;
 		getNumbersToCalculate();
 		calculate();
-		printProb();
+//		printProb();
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class StartProbability {
 				sentences++;
 //				System.out.println("JEG ER HER"+i);
 //				System.out.println(entity.get(i));
-				System.out.println(words.get(i));
+//				System.out.println(words.get(i));
 				switch (entity.get(i)) {
 				case PERSON:
 					System.out.println("P");
