@@ -7,12 +7,30 @@ import com.google.common.collect.Table;
 
 import entities.Entity;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EmissionProbability.
+ */
 public class EmissionProbability {
+	
+	/** The entity. */
 	private ArrayList<Entity> entity;
+	
+	/** The words. */
 	private ArrayList<String> words;
+	
+	/** The emi prob. */
 	private Table<Entity, String, Double> emiProb; // Transmission Probability
+	
+	/** The calc. */
 	private CalculateProbablity calc;
 	
+	/**
+	 * Instantiates a new emission probability.
+	 *
+	 * @param entity the entity
+	 * @param words the words
+	 */
 	public EmissionProbability(ArrayList<Entity> entity,ArrayList<String> words) {
 		this.entity = entity;
 		this.words = words;
@@ -25,6 +43,9 @@ public class EmissionProbability {
 	}
 	
 	
+	/**
+	 * Prints the emission.
+	 */
 	private void printEmission() {
 		System.out.println(emiProb.row(Entity.ORGAINIZATION));
 		System.out.println(emiProb.row(Entity.COUNTRY));
@@ -37,6 +58,9 @@ public class EmissionProbability {
 	}
 
 
+	/**
+	 * Calculate emission.
+	 */
 	private void calculateEmission() {
 		int count=0;
 		Entity ent = entity.get(0);
@@ -56,8 +80,7 @@ public class EmissionProbability {
 				if(word.equals(secondWord)) {
 //					System.out.println("COUNT:"+ count);
 					count++;
-				}
-				
+				}	
 			}
 			calc.setCounter(count);
 //			System.out.println("i: " + i);
@@ -69,6 +92,12 @@ public class EmissionProbability {
 	}
 
 
+	/**
+	 * Checks if is lastword.
+	 *
+	 * @param word the word
+	 * @return true, if is lastword
+	 */
 	private boolean isLastword(String word) {
 		String temp = word.substring(word.length()-1, word.length());
 		if(temp.equals(".")) {
@@ -78,10 +107,21 @@ public class EmissionProbability {
 	}
 
 
+	/**
+	 * Gets the table.
+	 *
+	 * @return the table
+	 */
 	public Table<Entity, String, Double> getTable() {
 		return this.emiProb;
 	}
 	
+	/**
+	 * Removes the dot.
+	 *
+	 * @param word the word
+	 * @return the string
+	 */
 	private String removeDot(String word) {
 		return word.substring(0, word.length()-1).trim();
 	}
