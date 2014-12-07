@@ -23,5 +23,11 @@ public class Main {
 		EmissionProbability emi = new EmissionProbability(read.getEntityList(), read.getWordList());
 		System.out.println("Classify this");
 		ReadFileToClassify classificationFile = new ReadFileToClassify("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test3.txt");
+		System.out.println("Classify");
+		ClassificationOfData classifyData = new ClassificationOfData(read.getHashMap(), prob.getStartProbability(),emi.getTable());
+		classifyData.classify("Microsoft");
+		classifyData.printClassifiedWords();
+		
+		
 	}
 }

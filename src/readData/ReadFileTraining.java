@@ -99,7 +99,7 @@ public class ReadFileTraining {
 	 * @param entity the entity
 	 */
 	private void addClassification(String word, Entity entity) {
-		this.classification.put(word, entity);
+		this.classification.put(word.toLowerCase(), entity);
 	}
 	
 	/**
