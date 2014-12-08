@@ -93,23 +93,23 @@ public class StartProbability {
 //				System.out.println(words.get(i));
 				switch (entity.get(i)) {
 				case PERSON:
-					System.out.println("P");
+//					System.out.println("P");
 					person++;
 					break;
 				case TIME:
-					System.out.println("T");
+//					System.out.println("T");
 					time++;
 					break;
 				case ORGAINIZATION:
-					System.out.println("ORG");
+//					System.out.println("ORG");
 					organization++;
 					break;
 				case COUNTRY:
-					System.out.println("C");
+//					System.out.println("C");
 					country++;
 					break;
 				default:
-					System.out.println("O");
+//					System.out.println("O");
 					other++;
 				}
 			}

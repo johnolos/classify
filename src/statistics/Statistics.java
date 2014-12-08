@@ -1,6 +1,8 @@
 package statistics;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import entities.Entity;
 
@@ -8,35 +10,63 @@ import entities.Entity;
  * The Class Statistics.
  */
 public class Statistics {
-	//THIS CLASS NEEDS FIXING BUT THIS IS A FRAME
 	/** The total. */
-	int total;
+	private int total;
 	
 	/** The correct. */
-	int correct;
+	private int correct;
 	
 	/** The error. */
-	int error;
+	private int error;
 	
 	/** The correct rate. */
-	double correctRate;
+	private double correctRate;
 	
 	/** The error rate. */
-	double errorRate;
+	private double errorRate;
+	
+	private HashMap<String, Entity> classified;
+	private HashMap<String, Entity> CorrectClassified;
+	
 	
 	/**
 	 * Instantiates a new statistics.
 	 */
-	public Statistics() {
-		this.total = 0; //FIX
-		this.correct = 0; //FIX
-		this.error = 0; //FIX
+	public Statistics(HashMap<String, Entity> classified,HashMap<String,Entity> file) {
+		this.classified=classified;
+		this.CorrectClassified = file;
+		this.total = classified.size();
+		this.correct = 0;
+		this.error = 0;
+		calculateStatistics();
+		calcCorrectRate();
+		calcErrorRate();
+	}
+	
+	private void calculateStatistics() {
+		for (Entry<String, Entity> entry : classified.entrySet()) {  // Itrate through hashmap
+			String key = entry.getKey();
+			Entity ent = entry.getValue();
+			if(CorrectClassified.get(key)==ent) {
+				addCorrect();
+			} else {
+				addError();
+			}
+		}
+	}
+	
+	private void addCorrect() {
+		this.correct++;
+	}
+	
+	private void addError() {
+		this.error++;
 	}
 	
 	/**
 	 * Calc correct rate.
 	 */
-	public void calcCorrectRate() {
+	private void calcCorrectRate() {
 		this.correctRate = this.correct/this.total;
 	}
 	
@@ -52,7 +82,7 @@ public class Statistics {
 	/**
 	 * Calc error rate.
 	 */
-	public void calcErrorRate() {
+	private void calcErrorRate() {
 		this.errorRate = this.error/this.total;
 	}
 	

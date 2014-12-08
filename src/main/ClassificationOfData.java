@@ -1,10 +1,10 @@
 package main;
 
-import java.awt.MultipleGradientPaint.ColorSpaceType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 import com.google.common.collect.Table;
@@ -16,15 +16,16 @@ public class ClassificationOfData {
 	private HashMap<String,Entity> classified;
 	private HashMap<String, Entity> trainingMap;
 	private HashMap<Entity,Double> start;
-	private Table<Entity, String, Double> transProb;
+	private Table<Entity, Entity, Float> transProb;
 	private Table<Entity,String, Double> emissionProb;
 	private boolean newSentence=true;
+	private Entity lastEntity;
 	
-	public ClassificationOfData(ArrayList<String> words,HashMap<String, Entity> map, HashMap<Entity,Double> start,/*Table<Entity, String, Double> trans,*/Table<Entity,String,Double> emi) {
+	public ClassificationOfData(ArrayList<String> words,HashMap<String, Entity> map, HashMap<Entity,Double> start,Table<Entity, Entity, Float> trans,Table<Entity,String,Double> emi) {
 		this.words=words;
 		this.trainingMap=map;
 		this.start=start;
-//		this.transProb=trans;
+		this.transProb=trans;
 		this.emissionProb=emi;
 		this.classified = new HashMap<String, Entity>();
 		runClassify();
@@ -37,17 +38,36 @@ public class ClassificationOfData {
 	}
 	
 	private void classify(String word) {
+		System.out.println(word);
 		String temp = word.toLowerCase();
 		if(trainingMap.get(temp)!=null) {
+			lastEntity=trainingMap.get(temp);
 			classified.put(word, trainingMap.get(temp));
 		} else if(newSentence) {
 			newSentence=false;
-			classified.put(word, findMaxStart());
+			lastEntity=findMaxStart();
+			classified.put(word, lastEntity);
 		} else {
-			classified.put(word, Entity.TIME);
+			Entity ent = getTransmisionEntity();
+			classified.put(word, ent);
+			lastEntity=ent;
 		}
+//		System.out.println("Classified: " + lastEntity);
 	}
 	
+	private Entity getTransmisionEntity() {
+		List<Entity> entity = Arrays.asList(Entity.values());
+		float max = 0;
+		Entity ent = lastEntity;
+		for(int i=0;i<entity.size();i++) {
+			if(transProb.get(lastEntity, entity.get(i)).floatValue()>max) {
+				max=transProb.get(lastEntity, entity.get(i)).floatValue();
+				ent = entity.get(i);
+			}
+		}
+		return ent;
+	}
+
 	private Entity findMaxStart() {
 		Double max = (Collections.max(start.values()));
 		for(Entry<Entity,Double> entry : start.entrySet()) {
@@ -63,13 +83,10 @@ public class ClassificationOfData {
 	}
 	
 	public void printClassifiedWords() {
-		System.out.println(classified.size());
-		Iterator entries = classified.entrySet().iterator();
-		while(entries.hasNext()) {
-//			System.out.println("HER");
-			Entry thisEntry = (Entry) entries.next();
-			System.out.println(thisEntry.getKey().toString());
-			System.out.println(thisEntry.getValue().toString());
+//		System.out.println(classified.size());
+		for(Entry<String,Entity> entry : classified.entrySet()) {
+			System.out.println(entry.getKey());
+			System.out.println(entry.getValue());
 		}
 	}
 
