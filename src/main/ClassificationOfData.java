@@ -1,6 +1,8 @@
 package main;
 
+import java.awt.MultipleGradientPaint.ColorSpaceType;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -16,6 +18,7 @@ public class ClassificationOfData {
 	private HashMap<Entity,Double> start;
 	private Table<Entity, String, Double> transProb;
 	private Table<Entity,String, Double> emissionProb;
+	private boolean newSentence=true;
 	
 	public ClassificationOfData(ArrayList<String> words,HashMap<String, Entity> map, HashMap<Entity,Double> start,/*Table<Entity, String, Double> trans,*/Table<Entity,String,Double> emi) {
 		this.words=words;
@@ -34,15 +37,27 @@ public class ClassificationOfData {
 	}
 	
 	private void classify(String word) {
-//		System.out.println(word);
 		String temp = word.toLowerCase();
 		if(trainingMap.get(temp)!=null) {
 			classified.put(word, trainingMap.get(temp));
+		} else if(newSentence) {
+			newSentence=false;
+			classified.put(word, findMaxStart());
 		} else {
-			classified.put(word, Entity.OTHER);
+			classified.put(word, Entity.TIME);
 		}
 	}
 	
+	private Entity findMaxStart() {
+		Double max = (Collections.max(start.values()));
+		for(Entry<Entity,Double> entry : start.entrySet()) {
+			if(entry.getValue()==max) {
+				return entry.getKey();
+			}
+		}
+		return Entity.OTHER;
+	}
+
 	public HashMap<String, Entity> getClassifiedWords() {
 		return this.classified;
 	}
