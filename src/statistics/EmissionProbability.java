@@ -38,7 +38,7 @@ public class EmissionProbability {
 		calc.setTotal(words.size());
 //		System.out.println("TOTAL; " + words.size());
 		calculateEmission();
-		printEmission();
+//		printEmission();
 	}
 	
 	

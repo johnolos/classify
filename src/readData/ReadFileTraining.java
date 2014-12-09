@@ -45,7 +45,7 @@ public class ReadFileTraining {
 	 * @param word the word
 	 */
 	@SuppressWarnings("unused")
-	private void printwords(String word) {
+	private void printword(String word) {
 		System.out.println(classification.size());
 		System.out.println(word);
 		System.out.println(classification.get(word));
@@ -73,6 +73,7 @@ public class ReadFileTraining {
 					if(isLastWord(word)) {
 						word = removeDot(word);
 					}
+					System.out.println(word);
 					addClassification(word,Entity.getEntity(ent));
 //					printwords(word);
 				}
