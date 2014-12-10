@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import entities.Entity;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Statistics.
  */
@@ -25,12 +26,18 @@ public class Statistics {
 	/** The error rate. */
 	private double errorRate;
 	
+	/** The classified. */
 	private HashMap<String, Entity> classified;
+	
+	/** The Correct classified. */
 	private HashMap<String, Entity> CorrectClassified;
 	
 	
 	/**
 	 * Instantiates a new statistics.
+	 *
+	 * @param classified the classified
+	 * @param file the file
 	 */
 	public Statistics(HashMap<String, Entity> classified,HashMap<String,Entity> file) {
 		this.classified=classified;
@@ -43,6 +50,9 @@ public class Statistics {
 		calcErrorRate();
 	}
 	
+	/**
+	 * Calculate statistics.
+	 */
 	private void calculateStatistics() {
 		for (Entry<String, Entity> entry : classified.entrySet()) {  // Itrate through hashmap
 			String key = entry.getKey();
@@ -55,10 +65,16 @@ public class Statistics {
 		}
 	}
 	
+	/**
+	 * Adds the correct.
+	 */
 	private void addCorrect() {
 		this.correct++;
 	}
 	
+	/**
+	 * Adds the error.
+	 */
 	private void addError() {
 		this.error++;
 	}
@@ -95,14 +111,29 @@ public class Statistics {
 		return this.errorRate;
 	}
 	
+	/**
+	 * Gets the error.
+	 *
+	 * @return the error
+	 */
 	public double getError() {
 		return this.error;
 	}
 	
+	/**
+	 * Gets the correct.
+	 *
+	 * @return the correct
+	 */
 	public double getCorrect() {
 		return this.correct;
 	}
 	
+	/**
+	 * Gets the total.
+	 *
+	 * @return the total
+	 */
 	public double getTotal() {
 		return this.total;
 	}

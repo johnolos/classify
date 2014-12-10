@@ -21,6 +21,7 @@ import org.jsoup.Jsoup;
 
 import entities.Entity;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ClassifyManually.
  */

@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import readData.ReadFileTraining;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class RegexClassificationPatterns.
  */
@@ -22,6 +23,8 @@ public class RegexClassificationPatterns {
 	
 	
 	private static final String DATE_EUROPEAN = "^(([0])?[1-9]|[12]\\d|3[0-1])+([ -.,/\\\\]){1,2}(((([0])?[1-9])|1\\d{1,2})|Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sept(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)+([ -.,/\\\\]{1,2}[12][0-9]{3})?$";
+	
+	/** The Constant DATE_US. */
 	private static final String DATE_US = "^(((([0])?[1-9])|1\\\\d{1,2})|Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sept(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)+([ -.,/\\\\]){1,2}(([0])?[1-9]|[12]\\d|3[0-1])+([ -.,/\\\\]{1,2}[12][0-9]{3})?$";
 	
 	/** The Constant TIME_PATTERN_24. */
@@ -62,7 +65,13 @@ public class RegexClassificationPatterns {
 //		return matches;
 //	}
 	
-	public static boolean isDate(String text) {
+	/**
+ * Checks if is date.
+ *
+ * @param text the text
+ * @return true, if is date
+ */
+public static boolean isDate(String text) {
 		Pattern pattern_eu = Pattern.compile(DATE_EUROPEAN);
 		Matcher matcher_eu = pattern_eu.matcher(text);
 		Pattern pattern_us = Pattern.compile(DATE_US);
