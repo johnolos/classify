@@ -8,6 +8,7 @@ by Magnus Settemsli Mogstad and John-Olav Storvold
 ##Hidden markov model approach to NER
 #### Viterbi algorithm
 http://airccse.org/journal/ijnlc/papers/1412ijnlc02.pdf
+http://en.wikipedia.org/wiki/Baum%E2%80%93Welch_algorithm
 
 ##Maximum Entropy markov model
 
