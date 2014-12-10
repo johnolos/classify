@@ -25,15 +25,20 @@ public class Main {
 		System.out.println("Emission");
 		EmissionProbability emi = new EmissionProbability(read.getEntityList(), read.getWordList());
 		System.out.println("Classify this");
-		ReadFileToClassify classificationFile = new ReadFileToClassify("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test3.txt");
+		ReadFileToClassify classificationFile = new ReadFileToClassify("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test4.txt");
 		System.out.println("Transmission");
 		TransmissionProbability trans = new TransmissionProbability("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test2.txt");
 		trans.runTransmissionProbabilistic();
 		System.out.println("Classify");
 		ClassificationOfData classifyData = new ClassificationOfData(classificationFile.getWords(),read.getHashMap(),prob.getStartProbability(),trans.getTable(),emi.getTable());
-//		classifyData.printClassifiedWords();
+		classifyData.printClassifiedWords();
 		
-		ReadClassifiedFile classified = new ReadClassifiedFile("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test2.txt");
+		ReadClassifiedFile classified = new ReadClassifiedFile("C:/Users/Magnus Mogstad/Dropbox/CS273 Data and knowledge bases/test3.txt");
 		Statistics statistics = new Statistics(classifyData.getClassifiedWords(), classified.getClassificated());
+		System.out.println("Correct " + statistics.getCorrect());
+		System.out.println("Error " + statistics.getError());
+		System.out.println("Total " + statistics.getTotal());
+		System.out.println("CRate" + statistics.getCorrectRate());
+		System.out.println("ERate" + statistics.getErrorRate());
 	}
 }

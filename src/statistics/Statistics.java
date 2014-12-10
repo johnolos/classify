@@ -11,13 +11,13 @@ import entities.Entity;
  */
 public class Statistics {
 	/** The total. */
-	private int total;
+	private double total;
 	
 	/** The correct. */
-	private int correct;
+	private double correct;
 	
 	/** The error. */
-	private int error;
+	private double error;
 	
 	/** The correct rate. */
 	private double correctRate;
@@ -93,5 +93,17 @@ public class Statistics {
 	 */
 	public double getErrorRate() {
 		return this.errorRate;
+	}
+	
+	public double getError() {
+		return this.error;
+	}
+	
+	public double getCorrect() {
+		return this.correct;
+	}
+	
+	public double getTotal() {
+		return this.total;
 	}
 }
