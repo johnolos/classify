@@ -90,7 +90,7 @@ public class ReadFileTraining {
 			System.out.println("IO exception");
 		}  catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("Something went wrong, are you shure every word has an entity supportet?");
+			System.out.println("Something went wrong, are you sure every word has an entity that is supported?");
 		}
 	}
 	

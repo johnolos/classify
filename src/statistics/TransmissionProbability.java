@@ -18,7 +18,7 @@ import entities.Entity;
 public class TransmissionProbability {
 	
 	/** The trans prob. */
-	private Table<Entity, Entity, Float> transProb; // Transmission Probability
+	private Table<Entity, Entity, Double> transProb; // Transmission Probability
 	
 	/** The file. */
 	private ReadFileTraining file;
@@ -51,7 +51,7 @@ public class TransmissionProbability {
 		List<Entity> states = Arrays.asList(Entity.values());
 		for(Entity state : states) {
 			for(Entity other: states) {
-				float prob = findEntityCombinationFreq(state, other, entity);
+				double prob = findEntityCombinationFreq(state, other, entity);
 				transProb.put(state, other, prob);
 			}
 		}
@@ -65,7 +65,7 @@ public class TransmissionProbability {
 	 * @param list the list
 	 * @return the float
 	 */
-	public float findEntityCombinationFreq(Entity first, Entity second, List<Entity> list) {
+	public double findEntityCombinationFreq(Entity first, Entity second, List<Entity> list) {
 		Iterator itr = list.iterator();
 		int freq = 0;
 		int total = 0;
@@ -82,8 +82,8 @@ public class TransmissionProbability {
 			}
 		}
 		if(total == 0)
-			return (float)0.0;
-		return (float)freq / (float)total;
+			return (double)0.0;
+		return (double)freq / (double)total;
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class TransmissionProbability {
 	 *
 	 * @return the table
 	 */
-	public Table<Entity, Entity, Float> getTable() {return this.transProb;}
+	public Table<Entity, Entity, Double> getTable() {return this.transProb;}
 	
 	/**
 	 * Gets the file.

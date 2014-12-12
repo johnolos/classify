@@ -1,77 +1,150 @@
 package viterbi;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import statistics.EmissionProbability;
 import statistics.TransmissionProbability;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 import entities.Entity;
 
 // TODO: Auto-generated Javadoc
+
 /**
- * The Class Viterbi.
+ * A class representation of the Viterbi algorithm which
+ * can be ran to give estimations on Hidden Markov Model.
  */
 public class Viterbi {
 	
 	/** The states. */
 	List<Entity> states; // States
 	
-	/** The obs. */
+	/** The observations. */
 	List<String> obs; // Observations
 	
 	/** The init prob. */
-	Map<Entity, Float> initProb; // Initial Probability
+	Map<Entity, Double> initProb; // Initial Probability
 	
-	/** The trans prob. */
-	TransmissionProbability transProb;
+	/** The transmission table probabilities */
+	Table<Entity, Entity, Double> transProb;
 	
-	/** The emi prob. */
-	EmissionProbability emiProb;
-//	Table<Entity, Entity, Float> transProb; // Transmission Probability
-//	Table<Entity, String, Float> emiProb; // Emission Probability
-	
+	/** The emission table probabilities */
+	Table<Entity, String, Double> emiProb;
 	
 	/** The prev state. */
 	Entity prevState;
 	
-	// Need to debate which type to represent each input.
+	/** The prev table */
+	Table<Entity, String, Double> prevTable;
+	
+	/** The current table */
+	Table<Entity, String, Double> currentTable;
+	
+	
 	/**
-	 * Instantiates a new viterbi.
+	 * Instantiates a new Viterbi object.
+	 * This object requires a few inputs to run
+	 * the Viterbi algorithm on a
+	 * Hidden Markov Model.
 	 *
-	 * @param obs the obs
-	 * @param transProb the trans prob
-	 * @param emiProb the emi prob
-	 * @param initProb the init prob
+	 * @param obs The observations. 
+	 * This is a list of string in a sentence.
+	 * @param transProb The Transmission Table.
+	 * @param emiProb The Emission Table.
+	 * @param initProb The Start Table.
 	 */
 	public Viterbi(
-//			List<Entity> states, 
 			List<String> obs, 
-			TransmissionProbability transProb,
-			EmissionProbability emiProb, 
-			Map<Entity, Float> initProb
+			Table<Entity, Entity, Double> transProb,
+			Table<Entity, String, Double> emiProb, 
+			Map<Entity, Double> initProb
 			) {
 		this.states = Arrays.asList(Entity.values());
-//		this.states = states;
 		this.obs = obs;
 		this.transProb = transProb;
 		this.emiProb = emiProb;
 		this.initProb = initProb;
 		
 		prevState = null;
+		currentTable = null;
 	}
 	
 	/**
-	 * Run.
+	 * Run the Viterbi Algorithm.
 	 */
 	public void run() {
-		for(Entity state : states) {
-			System.out.println(state);
+		for(String word : obs) {
+			currentTable = HashBasedTable.create();
+			double maxValue = 0.0;
+			Entity maxState = null;
+			for(Entity state : states) {
+				double value = probability(state, word);
+				if(value > maxValue) {
+					maxValue = value;
+					maxState = state;
+				}
+				currentTable.put(state, word, value);
+			}
+			prevTable = currentTable;
 		}
-		
+	}
+	
+	/**
+	 * Get the probability for state + word combination.
+	 * It takes into account maximum likelihood for previous
+	 * state.
+	 * @param state State checked
+	 * @param word String word checked.
+	 * @return double probability value for this combination.
+	 */
+	private double probability(Entity state, String word) {
+//		double prevValue = prevTable.get(state, word);
+		double prob;
+		if (prevTable == null) { // First time iteration
+			double startValue = Math.log(initProb.get(state)) / Math.log(2);
+			double emiValue = Math.log(emiProb.get(state, word)) / Math.log(2);
+			prob = startValue + emiValue;
+		} else { // Rest of the iterations
+			double emiValue = Math.log(emiProb.get(state, word)) / Math.log(2);
+			double maxValue = getMaximumTransitionProbability(state, word);
+			prob = emiValue + maxValue;
+		}
+		return Math.pow(2, prob);
+	}
+	
+	/**
+	 * Get the maximum likelihood for transition between
+	 * current state and previous state for a word.
+	 * We only care about the value and not the
+	 * combination that gives this.
+	 * 
+	 * Remember that all probabilities here
+	 * are given in log2 for accuracy and efficiency.
+	 * @param word Word checked
+	 * @param currentState Current state checked
+	 * @return double value that has the highest maximum probability
+	 */
+	private Double getMaximumTransitionProbability(Entity currentState,
+			String word) {
+		List<Double> values = new ArrayList<Double>();
+		for(Entity state : states) {
+			double prevValue = Math.log(prevTable.get(state, word)) / Math.log(2);
+			double transitionValue = Math.log(transProb.get(state, currentState)) 
+					/ Math.log(2);
+			values.add(prevValue + transitionValue);
+		}
+		return Collections.max(values);
+	}
+	
+	
+	public Table<Entity, String, Double> getTable() {
+		return currentTable;
 	}
 	
 	/**

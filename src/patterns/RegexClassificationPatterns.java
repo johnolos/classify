@@ -1,12 +1,16 @@
 package patterns;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +39,28 @@ public class RegexClassificationPatterns {
 	private static final String NAME = "^[A-Z][\\p{L}([,-])? .'-]+$";
 	
 	
+	private static final String CONTRIES_LIST = "lists/countries.txt";
+	
+	private Set<String> countries;
+	
+	public RegexClassificationPatterns(){
+		countries = new HashSet<String>();
+		try {
+			FileReader file = null;
+			file = new FileReader("lists/countries.txt");
+			BufferedReader bufferedReader = new BufferedReader(file);
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				countries.add(line);
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	/**
@@ -47,6 +73,11 @@ public class RegexClassificationPatterns {
 		Pattern pattern = Pattern.compile(NAME);
 		Matcher matcher = pattern.matcher(text);
 		return matcher.matches();
+	}
+	
+	
+	public boolean isCountry(String text) {
+		return countries.contains(text.toLowerCase());
 	}
 	
 //	public static ArrayList<String> findNames(String text) {
@@ -113,27 +144,8 @@ public static boolean isDate(String text) {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		FileReader file = null;
-		try {
-			file = new FileReader("dates.txt");
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		BufferedReader bufferedReader = new BufferedReader(file);
-		String line;
-		try {
-			while((line = bufferedReader.readLine()) != null) {
-				System.out.println(line + ": " + isDate(line));
-//				ArrayList<String> matches = findDates(line);
-//				for(String match : matches) {
-//					System.out.println(match);
-//				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		RegexClassificationPatterns pt = new RegexClassificationPatterns();
+		System.out.println(pt.isCountry("virgin islands"));
 	}
 	
 }
