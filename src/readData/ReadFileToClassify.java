@@ -18,6 +18,8 @@ public class ReadFileToClassify {
 	
 	private ArrayList<String> lines;
 	
+	private ArrayList<ArrayList<String>> lineWords;
+	
 	/** The words without dot. */
 	private ArrayList<String> wordsWithoutDot;
 	
@@ -27,6 +29,7 @@ public class ReadFileToClassify {
 	 * @param path the path
 	 */
 	public ReadFileToClassify(String path) {
+		this.lineWords = new ArrayList<ArrayList<String>>();
 		this.words = new ArrayList<String>();
 		this.lines = new ArrayList<String>();
 		this.wordsWithoutDot = new ArrayList<String>();
@@ -63,12 +66,14 @@ public class ReadFileToClassify {
 			String fullLine = "";
 			while(line!=null) {
 				StringTokenizer token = new StringTokenizer(line, " ");
+				ArrayList<String> readLine = new ArrayList<String>();
 				while(token.hasMoreElements()) {
 					String word = token.nextElement().toString();
 					addWord(word);
 					if(isLastWord(word)) {
 						fullLine += word;
 						word = removeDot(word);
+						readLine.add(word);
 						addWordWithoutDot(word);
 						addLine(fullLine);
 						fullLine = "";
@@ -76,6 +81,7 @@ public class ReadFileToClassify {
 						fullLine += word + " ";
 					}
 				}
+				this.lineWords.add(readLine);
 				line = bufferedReader.readLine();
 			}
 			bufferedReader.close();
@@ -159,6 +165,10 @@ public class ReadFileToClassify {
 	
 	public ArrayList<String> getLines() {
 		return this.lines;
+	}
+	
+	public ArrayList<ArrayList<String>> getWordLines() {
+		return this.lineWords;
 	}
 
 }

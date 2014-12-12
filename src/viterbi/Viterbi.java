@@ -117,10 +117,12 @@ public class Viterbi {
 		double prob;
 		if (prevTable == null) { // First time iteration
 			double startValue = Math.log(initProb.get(state)) / Math.log(2);
-			double emiValue = Math.log(emiProb.get(state, word)) / Math.log(2);
+			double emi = emiProb.get(state, word) == null ? 0.0 : emiProb.get(state, word);
+			double emiValue = Math.log(emi) / Math.log(2);
 			prob = startValue + emiValue;
 		} else { // Rest of the iterations
-			double emiValue = Math.log(emiProb.get(state, word)) / Math.log(2);
+			double emi = emiProb.get(state, word) == null ? 0.0 : emiProb.get(state, word);
+			double emiValue = Math.log(emi) / Math.log(2);
 			double maxValue = getMaximumTransitionProbability(state, word);
 			prob = emiValue + maxValue;
 		}
@@ -143,7 +145,8 @@ public class Viterbi {
 			String word) {
 		List<Double> values = new ArrayList<Double>();
 		for(Entity state : states) {
-			double prevValue = Math.log(prevTable.get(state, word)) / Math.log(2);
+			double prev = prevTable.get(state, word) == null ? 0.0 : prevTable.get(state, word);
+			double prevValue = Math.log(prev) / Math.log(2);
 			double transitionValue = Math.log(transProb.get(state, currentState)) 
 					/ Math.log(2);
 			values.add(prevValue + transitionValue);
@@ -193,7 +196,7 @@ public class Viterbi {
 		}
 	}
 	
-	class ObservationException extends Exception {
+	public class ObservationException extends Exception {
 		  public ObservationException() { super(); }
 		  public ObservationException(String message) { super(message); }
 		  public ObservationException(String message, Throwable cause) { super(message, cause); }
