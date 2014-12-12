@@ -44,6 +44,7 @@ public class Main {
 		ArrayList<ArrayList<String>> linesToClassify = classificationFile.getWordLines();
 		List<Entity> classifiedStates;
 		for (ArrayList<String> line : linesToClassify) {
+			if (line == null) continue;
 			viterbi.setObservations(line);
 			try {
 				viterbi.run();

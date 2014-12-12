@@ -6,9 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import statistics.EmissionProbability;
-import statistics.TransmissionProbability;
-
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
@@ -21,6 +18,8 @@ import entities.Entity;
  * can be ran to give estimations on Hidden Markov Model.
  */
 public class Viterbi {
+	
+	public static final double MIN_VALUE = 0.0000001;
 	
 	/** The states. */
 	List<Entity> states; // States
@@ -88,10 +87,11 @@ public class Viterbi {
 		probabilityStates = new ArrayList<Entity>();
 		for(String word : obs) {
 			currentTable = HashBasedTable.create();
-			double maxValue = 0.0;
+			double maxValue = -100.0;
 			Entity maxState = null;
 			for(Entity state : states) {
 				double value = probability(state, word);
+				System.out.println("Entity: " + state + " Word: " + word + " Value: " + value);
 				if(value > maxValue) {
 					maxValue = value;
 					maxState = state;
@@ -113,19 +113,23 @@ public class Viterbi {
 	 * @return double probability value for this combination.
 	 */
 	private double probability(Entity state, String word) {
-//		double prevValue = prevTable.get(state, word);
 		double prob;
 		if (prevTable == null) { // First time iteration
-			double startValue = Math.log(initProb.get(state)) / Math.log(2);
-			double emi = emiProb.get(state, word) == null ? 0.0 : emiProb.get(state, word);
+			double start = initProb.get(state) == 0.0 ? MIN_VALUE : initProb.get(state);
+			double startValue = Math.log(start) / Math.log(2);
+			double emi = emiProb.get(state, word) == null ? MIN_VALUE : emiProb.get(state, word);
+//			if(emi > 0.0) System.out.println("Emi: " + emi + " State " + state + " Word " + word);
 			double emiValue = Math.log(emi) / Math.log(2);
 			prob = startValue + emiValue;
 		} else { // Rest of the iterations
-			double emi = emiProb.get(state, word) == null ? 0.0 : emiProb.get(state, word);
+			double emi = emiProb.get(state, word) == null ? MIN_VALUE : emiProb.get(state, word);
+//			if(emi > 0.0) System.out.println("Emi: " + emi  + " State " + state + " Word " + word);
 			double emiValue = Math.log(emi) / Math.log(2);
 			double maxValue = getMaximumTransitionProbability(state, word);
 			prob = emiValue + maxValue;
+//			if(emi > 0.0) System.out.println("Emivalue: " + emiValue + " MaxValue: " + maxValue + " Prob: " + prob);
 		}
+//		System.out.println("Prob: " + prob);
 		return Math.pow(2, prob);
 	}
 	
@@ -145,10 +149,10 @@ public class Viterbi {
 			String word) {
 		List<Double> values = new ArrayList<Double>();
 		for(Entity state : states) {
-			double prev = prevTable.get(state, word) == null ? 0.0 : prevTable.get(state, word);
+			double prev = prevTable.get(state, word) == null ? MIN_VALUE : prevTable.get(state, word);
 			double prevValue = Math.log(prev) / Math.log(2);
-			double transitionValue = Math.log(transProb.get(state, currentState)) 
-					/ Math.log(2);
+			double transValue = transProb.get(state, currentState) == 0.0 ? MIN_VALUE : transProb.get(state, currentState);
+			double transitionValue = Math.log(transValue) / Math.log(2);
 			values.add(prevValue + transitionValue);
 		}
 		return Collections.max(values);
@@ -180,20 +184,6 @@ public class Viterbi {
 	 */
 	public void setObservations(List<String> obs) {
 		this.obs = obs;
-	}
-	
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-		Viterbi viterbi = new Viterbi(null, null, null, null);
-		try {
-			viterbi.run();
-		} catch (ObservationException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public class ObservationException extends Exception {

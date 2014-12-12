@@ -3,8 +3,10 @@ package statistics;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import readData.ReadFileTraining;
+import viterbi.Viterbi;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
@@ -57,6 +59,17 @@ public class TransmissionProbability {
 		}
 	}
 	
+	public void printTable() {
+		Set<Entity> rows = transProb.rowKeySet();
+		Set<Entity> cols = transProb.columnKeySet();
+		for(Entity row : rows) {
+			for(Entity col : cols) {
+				double value = transProb.get(row, col);
+				System.out.println("Row: " + row + " Col: " + col + " Value: " + value);
+			}
+		}
+	}
+	
 	/**
 	 * Find entity combination freq.
 	 *
@@ -82,7 +95,7 @@ public class TransmissionProbability {
 			}
 		}
 		if(total == 0)
-			return (double)0.0;
+			return Viterbi.MIN_VALUE;
 		return (double)freq / (double)total;
 	}
 	
@@ -91,7 +104,7 @@ public class TransmissionProbability {
 	 *
 	 * @return the table
 	 */
-	public Table<Entity, Entity, Double> getTable() {return this.transProb;}
+	public Table<Entity, Entity, Double> getTable() {return transProb;}
 	
 	/**
 	 * Gets the file.

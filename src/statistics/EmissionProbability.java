@@ -1,6 +1,7 @@
 package statistics;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
@@ -114,6 +115,17 @@ public class EmissionProbability {
 	 */
 	public Table<Entity, String, Double> getTable() {
 		return this.emiProb;
+	}
+	
+	public void printTable() {
+		Set<Entity> rows = emiProb.rowKeySet();
+		Set<String> cols = emiProb.columnKeySet();
+		for(Entity row : rows) {
+			for(String col : cols) {
+				double value = emiProb.get(row, col) == null ? 0.0 : emiProb.get(row, col);
+				System.out.println("Row: " + row + " Col: " + col + " Value: " + value);
+			}
+		}
 	}
 	
 	/**
