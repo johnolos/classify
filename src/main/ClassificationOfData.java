@@ -30,7 +30,7 @@ public class ClassificationOfData {
 	private HashMap<Entity,Double> start;
 	
 	/** The trans prob. */
-	private Table<Entity, Entity, Float> transProb;
+	private Table<Entity, Entity, Double> transProb;
 	
 	/** The emission prob. */
 	private Table<Entity,String, Double> emissionProb;
@@ -50,7 +50,7 @@ public class ClassificationOfData {
 	 * @param trans the trans
 	 * @param emi the emi
 	 */
-	public ClassificationOfData(ArrayList<String> words,HashMap<String, Entity> map, HashMap<Entity,Double> start,Table<Entity, Entity, Float> trans,Table<Entity,String,Double> emi) {
+	public ClassificationOfData(ArrayList<String> words,HashMap<String, Entity> map, HashMap<Entity,Double> start,Table<Entity, Entity, Double> trans,Table<Entity,String,Double> emi) {
 		this.words=words;
 		this.trainingMap=map;
 		this.start=start;
