@@ -79,6 +79,7 @@ public class ReadFileToClassify {
 						fullLine = "";
 					} else {
 						fullLine += word + " ";
+						readLine.add(word);
 					}
 				}
 				this.lineWords.add(readLine);
