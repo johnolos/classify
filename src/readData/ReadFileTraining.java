@@ -22,6 +22,8 @@ public class ReadFileTraining {
 	/** The classification. */
 	HashMap<String, Entity> classification;
 	
+	ArrayList<String> lines;
+	
 	/** The words. */
 	ArrayList<String> words; 
 	
@@ -35,6 +37,7 @@ public class ReadFileTraining {
 	 */
 	public ReadFileTraining(String path) {
 		this.words = new ArrayList<String>();
+		this.lines = new ArrayList<String>();
 		this.entit = new ArrayList<Entity>();
 		this.classification = new HashMap<String, Entity>();
 		getWordsFromFile(path);
@@ -50,6 +53,13 @@ public class ReadFileTraining {
 		System.out.println(classification.size());
 		System.out.println(word);
 		System.out.println(classification.get(word));
+	}
+	
+	private void printLines() {
+		System.out.println("lines");
+		for(int i=0; i<this.lines.size();i++) {
+			System.out.println(i+ " - "+this.lines.get(i));
+		}
 	}
 
 	/**
@@ -94,6 +104,10 @@ public class ReadFileTraining {
 		}
 	}
 	
+	private void addLine(String line) {
+		this.lines.add(line);
+	}
+
 	/**
 	 * Adds the classification.
 	 *
@@ -171,5 +185,9 @@ public class ReadFileTraining {
 	 */
 	public ArrayList<String> getWordList() {
 		return this.words;
+	}
+	
+	public ArrayList<String> getLines() {
+		return this.lines;
 	}
 }

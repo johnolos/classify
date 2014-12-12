@@ -16,6 +16,8 @@ public class ReadFileToClassify {
 	/** The words. */
 	private ArrayList<String> words;
 	
+	private ArrayList<String> lines;
+	
 	/** The words without dot. */
 	private ArrayList<String> wordsWithoutDot;
 	
@@ -25,10 +27,11 @@ public class ReadFileToClassify {
 	 * @param path the path
 	 */
 	public ReadFileToClassify(String path) {
-		words = new ArrayList<String>();
-		wordsWithoutDot = new ArrayList<String>();
+		this.words = new ArrayList<String>();
+		this.lines = new ArrayList<String>();
+		this.wordsWithoutDot = new ArrayList<String>();
 		read(path);
-		printWords();
+		printLines();
 	}
 	
 	/**
@@ -38,7 +41,13 @@ public class ReadFileToClassify {
 		for(int i=0; i<this.words.size();i++) {
 			System.out.println(words.get(i));
 		}
-		
+	}
+	
+	private void printLines() {
+		System.out.println("lines");
+		for(int i=0; i<this.lines.size();i++) {
+			System.out.println(i + " - " + this.lines.get(i));
+		}
 	}
 	
 	/**
@@ -51,15 +60,21 @@ public class ReadFileToClassify {
 			FileReader fileReader = new FileReader(path);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line = bufferedReader.readLine();
+			String fullLine = "";
 			while(line!=null) {
 				StringTokenizer token = new StringTokenizer(line, " ");
 				while(token.hasMoreElements()) {
 					String word = token.nextElement().toString();
 					addWord(word);
 					if(isLastWord(word)) {
+						fullLine += word;
 						word = removeDot(word);
 						addWordWithoutDot(word);
-					}					
+						addLine(fullLine);
+						fullLine = "";
+					} else {
+						fullLine += word + " ";
+					}
 				}
 				line = bufferedReader.readLine();
 			}
@@ -78,6 +93,10 @@ public class ReadFileToClassify {
 		}
 	}
 	
+	private void addLine(String fullLine) {
+		this.lines.add(fullLine);
+	}
+
 	/**
 	 * Checks if is last word.
 	 *
@@ -136,6 +155,10 @@ public class ReadFileToClassify {
 	 */
 	public ArrayList<String> getWords() {
 		return this.words;
+	}
+	
+	public ArrayList<String> getLines() {
+		return this.lines;
 	}
 
 }
