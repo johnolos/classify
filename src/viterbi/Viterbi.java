@@ -40,6 +40,8 @@ public class Viterbi {
 	/** The prev state. */
 	Entity prevState;
 	
+	List<Entity> probabilityStates;
+	
 	/** The prev table */
 	Table<Entity, String, Double> prevTable;
 	
@@ -73,12 +75,17 @@ public class Viterbi {
 		
 		prevState = null;
 		currentTable = null;
+		probabilityStates = null;
 	}
 	
 	/**
 	 * Run the Viterbi Algorithm.
+	 * @throws ObservationException 
 	 */
-	public void run() {
+	public void run() throws ObservationException {
+		if(obs == null)
+			throw new ObservationException("Insert new observations");
+		probabilityStates = new ArrayList<Entity>();
 		for(String word : obs) {
 			currentTable = HashBasedTable.create();
 			double maxValue = 0.0;
@@ -91,7 +98,9 @@ public class Viterbi {
 				}
 				currentTable.put(state, word, value);
 			}
+			probabilityStates.add(maxState);
 			prevTable = currentTable;
+			obs = null;
 		}
 	}
 	
@@ -142,9 +151,32 @@ public class Viterbi {
 		return Collections.max(values);
 	}
 	
-	
+	/**
+	 * Returns the current calculated table if the user
+	 * want's to take a look.
+	 * @return Table<Entity,String,Double>
+	 */
 	public Table<Entity, String, Double> getTable() {
 		return currentTable;
+	}
+	
+	/**
+	 * Get states the algorithm finds for each state.
+	 * @return List<Entity> List of Entity states.
+	 */
+	public List<Entity> getStates() {
+		return probabilityStates;
+	}
+	
+	/**
+	 * Set new observations for the Viterbi Algorithm
+	 * to calculate the maximum likelihood of state for
+	 * each of the observations.
+	 * 
+	 * @param obs List<String> List of observations
+	 */
+	public void setObservations(List<String> obs) {
+		this.obs = obs;
 	}
 	
 	/**
@@ -154,7 +186,18 @@ public class Viterbi {
 	 */
 	public static void main(String[] args) {
 		Viterbi viterbi = new Viterbi(null, null, null, null);
-		viterbi.run();
+		try {
+			viterbi.run();
+		} catch (ObservationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	class ObservationException extends Exception {
+		  public ObservationException() { super(); }
+		  public ObservationException(String message) { super(message); }
+		  public ObservationException(String message, Throwable cause) { super(message, cause); }
+		  public ObservationException(Throwable cause) { super(cause); }
 	}
 		
 }
