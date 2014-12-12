@@ -70,7 +70,7 @@ public class ReadFileToClassify {
 				while(token.hasMoreElements()) {
 					String word = token.nextElement().toString();
 					addWord(word);
-					if(isLastWord(word)) {
+					if(isLastWord(word) ) {
 						fullLine += word;
 						word = removeDot(word);
 						readLine.add(word);
@@ -78,6 +78,9 @@ public class ReadFileToClassify {
 						addLine(fullLine);
 						fullLine = "";
 					} else {
+						if(isComma(word)) {
+							word = removeDot(word);
+						}
 						fullLine += word + " ";
 						readLine.add(word);
 					}
@@ -100,6 +103,14 @@ public class ReadFileToClassify {
 		}
 	}
 	
+	private boolean isComma(String word) {
+		String temp = word.substring(word.length()-1, word.length());
+		if(temp.equals(",")) {
+			return true;
+		}
+		return false;
+	}
+
 	private void addLine(String fullLine) {
 		this.lines.add(fullLine);
 	}

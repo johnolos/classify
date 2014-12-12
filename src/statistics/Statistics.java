@@ -1,6 +1,8 @@
 package statistics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -32,6 +34,8 @@ public class Statistics {
 	/** The Correct classified. */
 	private HashMap<String, Entity> CorrectClassified;
 	
+	private List<Entity> arrayClassified;
+	
 	
 	/**
 	 * Instantiates a new statistics.
@@ -50,6 +54,21 @@ public class Statistics {
 		calcErrorRate();
 	}
 	
+	public Statistics(List<Entity> file, HashMap<String, Entity> classified) {
+		this.arrayClassified = file;
+		this.classified=classified;
+		this.total = this.arrayClassified.size();
+		this.correct=0;
+		this.error=0;
+		calcArrayHashStatistics();
+		
+	}
+	
+	private void calcArrayHashStatistics() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * Calculate statistics.
 	 */

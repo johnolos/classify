@@ -80,7 +80,7 @@ public class ReadClassifiedFile {
 	 */
 	private boolean isLastWord(String word) {
 		String temp = word.substring(word.length()-1, word.length());
-		if(temp.equals(".")) {
+		if(temp.equals(".") || temp.equals(",")) {
 			return true;
 		}
 		return false;
