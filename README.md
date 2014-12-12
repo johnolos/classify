@@ -9,6 +9,8 @@ by Magnus Settemsli Mogstad and John-Olav Storvold
 #### Viterbi algorithm
 http://airccse.org/journal/ijnlc/papers/1412ijnlc02.pdf
 http://en.wikipedia.org/wiki/Baum%E2%80%93Welch_algorithm
+http://jocpr.com/vol6-iss7-2014/JCPR-2014-6-7-1474-1478.pdf
+http://homepages.ulb.ac.be/~dgonze/TEACHING/viterbi.pdf
 
 ##Maximum Entropy markov model
 
