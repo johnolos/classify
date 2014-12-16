@@ -22,6 +22,8 @@ import entities.Entity;
 public class Viterbi {
 	
 	public static final double MIN_VALUE = 0.0000001;
+	private static final double KNOWLEDGE_INFLUENCE = -0.5;
+	private static final double START_VALUE = -10000.0;
 	
 	/** The states. */
 	List<Entity> states; // States
@@ -93,28 +95,36 @@ public class Viterbi {
 			throw new ObservationException("Insert new observations");
 		probabilityStates = new ArrayList<Entity>();
 		Entity regex;
+		// Iterate over all observations. Words in the sentence.
 		for(String word : obs) {
 			currentTable = HashBasedTable.create();
-			double maxValue = -100.0;
+			double maxValue = START_VALUE;
 			Entity maxState = null;
+			// Iterate over all states and calculate the probability of
+			// the observation being in that state.
 			for(Entity state : states) {
+				// Runs calculations in delegated code
 				double value = probability(state, word);
-//				System.out.println("Entity: " + state + " Word: " + word + " Value: " + value);
 				if(value > maxValue) {
 					maxValue = value;
 					maxState = state;
 				}
+				// Put result in the table.
 				currentTable.put(state, word, value);
 			}
 			if(maxState == Entity.OTHER) {
+				// No result on classification so we check
+				// our knowledge and Regex expressions.
 				if((regex = checkRegexPatterns(word)) != null) {
 					maxState = regex;
 					System.out.println("Match " + word + maxState);
-					maxValue = -0.5;
+					maxValue = KNOWLEDGE_INFLUENCE;
 					currentTable.put(maxState, word, maxValue);
 				}
 			}
+			// Update our findings our array.
 			probabilityStates.add(maxState);
+			// Set current table as previous for next iteration.
 			prevTable = currentTable;
 		}
 		obs = null;
@@ -184,6 +194,13 @@ public class Viterbi {
 		return currentTable;
 	}
 	
+	/**
+	 * Checks our knowledge about locations, common names
+	 * and commonly used date patterns to see if we can
+	 * classify the word based on that.
+	 * @param text String word to be classified
+	 * @return Entity Entity it fits.
+	 */
 	private Entity checkRegexPatterns(String text) {
 		Entity plausible = null;
 		String temp = text;
@@ -192,6 +209,8 @@ public class Viterbi {
 				if(temp.contains("'s")) {
 					temp = temp.replaceAll("'s", "");
 				} else if(temp.contains("s'")) {
+					temp = temp.replace("s'", "");
+				}  else if(temp.contains("es'")) {
 					temp = temp.replace("es'", "");
 				}
 			}

@@ -2376,7 +2376,7 @@ Walker P
 met O
 with O
 his O
-new 
+new O 
 bipartisan ORG
 Cabinet ORG
 He O

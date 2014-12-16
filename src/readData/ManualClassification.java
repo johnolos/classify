@@ -103,18 +103,18 @@ public class ManualClassification {
 			System.out.println("Words remaining: " + remainingWords);
 			if(word.equals(""))
 				continue;
-			String firstLetter = word.substring(0, 1);
+//			String firstLetter = word.substring(0, 1);
 			String input = "";
-			if(firstLetter.matches("[a-z]")) {
-				System.out.println("OTHER");
-			} else {
-				System.out.println("Classify " + word + ":");
-				input = user.nextLine();
-				if(input.equals("exit"))
-					break;
-				if(input.equals(""))
-					input = "O";
-			}
+//			if(firstLetter.matches("[a-z]")) {
+//				System.out.println("OTHER");
+//			} else {
+			System.out.println("Classify " + word + ":");
+			input = user.nextLine();
+			if(input.equals("exit"))
+				break;
+			if(input.equals(""))
+				input = "O";
+//			}
 			count++;
 			Entity entity = Entity.getEntity(input);
 			classifiedWords.add(new Classification(word, entity));
@@ -133,6 +133,9 @@ public class ManualClassification {
 			throws FileNotFoundException, UnsupportedEncodingException {
 		System.out.println("Filename: ");
 		String filename = user.nextLine();
+		while(filename == "" || filename == " ") {
+			filename = user.nextLine();
+		}
 		if (filename.equals("exit"))
 			return;
 		PrintWriter writer = new PrintWriter(filename, "UTF-8");
@@ -148,7 +151,7 @@ public class ManualClassification {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		File file = new File("article.txt");
+		File file = new File("testDocs/testArticle4.txt");
 		ManualClassification classify = new ManualClassification(file);
 	}
 }

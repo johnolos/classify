@@ -28,7 +28,7 @@ public class Main {
 	public static void main(String[] args) {
 		String trainingFile = "testDocs/trainingArticles.txt";
 		String testFile = "testDocs/testArticle.txt";
-		String classifiedFile = "testDOcs/textClassified.txt";
+		String classifiedFile = "testDocs/textClassified.txt";
 		ReadFileTraining read = new ReadFileTraining(trainingFile);
 		System.out.println("Start");
 		StartProbability startProb = new StartProbability(read.getWordList(), read.getEntityList());

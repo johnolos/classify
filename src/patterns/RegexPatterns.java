@@ -29,7 +29,7 @@ public class RegexPatterns {
 	private static final String DATE_US = "^(((([0])?[1-9])|1\\\\d{1,2})|Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sept(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)+([ -.,/\\\\]){1,2}(([0])?[1-9]|[12]\\d|3[0-1])+([ -.,/\\\\]{1,2}[12][0-9]{3})?$";
 	
 	/** Year pattern*/
-	private static final String YEAR_PATTERN = "^\\d{4}$";
+	private static final String YEAR_PATTERN = "^(\\d{4})+([-]\\d{2})?$";
 	
 	/** YYYY[.\-]MM[.\-]DD Pattern*/
 	private static final String YEAR_MONTH_DAY = "^(\\d{4}[.\\-\\/]\\d{2}[.\\-\\/]\\d{2})$";
@@ -130,7 +130,8 @@ public class RegexPatterns {
 			return true;
 		}
 		return text.matches(YEAR_PATTERN) || text.matches(DATE_EUROPEAN)
-				|| text.matches(DATE_US) || text.matches(YEAR_MONTH_DAY);
+				|| text.matches(DATE_US) || text.matches(YEAR_MONTH_DAY)
+				|| text.matches(TIME_PATTERN_24);
 	}
 		
 	/**
