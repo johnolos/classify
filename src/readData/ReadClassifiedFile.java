@@ -28,7 +28,7 @@ public class ReadClassifiedFile {
 	 * @param path the path
 	 */
 	public ReadClassifiedFile(String path) {
-		this.classificated = new HashMap<String, Entity>();
+//		this.classificated = new HashMap<String, Entity>();
 		this.entities = new ArrayList<Entity>();
 		getCorrectClassification(path);
 	}
@@ -53,7 +53,7 @@ public class ReadClassifiedFile {
 					if(isLastWord(word)) {
 						word = removeDot(word);
 					}
-					addClassified(word,Entity.getEntity(entity));
+//					addClassified(word,Entity.getEntity(entity));
 					this.entities.add(Entity.getEntity(entity));
 				}
 				line = bufferedReader.readLine();
