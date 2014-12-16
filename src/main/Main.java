@@ -61,6 +61,7 @@ public class Main {
 			}
 		}
 		
+
 //		ReadClassifiedFile classified = new ReadClassifiedFile("testDocs/test3.txt");
 //		Statistics statistics = new Statistics(classifyData.getClassifiedWords(), classified.getClassificated());
 //		System.out.println("Correct " + statistics.getCorrect());
