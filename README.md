@@ -2,17 +2,14 @@ Name Entity Recognition  (NER) System
 ========
 by Magnus Settemsli Mogstad and John-Olav Storvold
 
-#Which approach to use?
-##Sequence model approach to NER
-### https://class.coursera.org/nlp/lecture/59
-##Hidden markov model approach to NER
-#### Viterbi algorithm
-http://airccse.org/journal/ijnlc/papers/1412ijnlc02.pdf
-http://en.wikipedia.org/wiki/Baum%E2%80%93Welch_algorithm
-http://jocpr.com/vol6-iss7-2014/JCPR-2014-6-7-1474-1478.pdf
-http://homepages.ulb.ac.be/~dgonze/TEACHING/viterbi.pdf
-
-##Maximum Entropy markov model
+#Make Project work on own IDE
+1. Import project to IDE
+2. Right click on project in package explorer
+3. Click on build path $\rightarrow$ Configure build path
+4. Then click button called import external jar(s)
+5. Go to folder with project
+6. Click on jars called guava-18.0.jar and jsoup-1.8.1.jar and click add.
+7. Program should now be working.
 
 
 Milestones:
