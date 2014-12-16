@@ -82,10 +82,16 @@ public class Statistics {
 		for(int i=0; i<this.classifiedArrayList.size();i++) {
 			if(classifiedArrayList.get(i)==selfClassifiedArrayList.get(i)) {
 				addCorrect();
+//				printEntities(classifiedArrayList.get(i), selfClassifiedArrayList.get(i),true);
 			} else {
 				addError();
+//				printEntities(classifiedArrayList.get(i), selfClassifiedArrayList.get(i),false);
 			}
 		}
+	}
+
+	private void printEntities(Entity entity, Entity entity2, boolean bol) {
+		System.out.println("Compare: " + entity + " - " + entity + " it is: " + bol);
 	}
 
 	/**
