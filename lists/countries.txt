@@ -1,3 +1,9 @@
+North
+South
+West
+East
+Sea
+Ocean
 Acre
 Afghanistan
 Aguascalientes
