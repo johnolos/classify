@@ -28,8 +28,10 @@ public class RegexPatterns {
 	/** The Constant DATE_US. */
 	private static final String DATE_US = "^(((([0])?[1-9])|1\\\\d{1,2})|Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sept(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)+([ -.,/\\\\]){1,2}(([0])?[1-9]|[12]\\d|3[0-1])+([ -.,/\\\\]{1,2}[12][0-9]{3})?$";
 	
-	private static final String YEAR_PATTERN = "^([1][1-9]{1}[0-9][0]+(s)?)$";
+	/** Year pattern*/
+	private static final String YEAR_PATTERN = "^\\d{4}$";
 	
+	/** YYYY[.\-]MM[.\-]DD Pattern*/
 	private static final String YEAR_MONTH_DAY = "^(\\d{4}[.\\-\\/]\\d{2}[.\\-\\/]\\d{2})$";
 	
 	/** The Constant TIME_PATTERN_24. */
@@ -43,13 +45,26 @@ public class RegexPatterns {
 	
 	private static final String TIME_LIST = "lists/time.txt";
 	
-	private Set<String> locations; /** Common abrivations about location */
+	private static final String NAME_LIST = "lists/names.txt";
 	
-	private Set<String> time; /** Common words about time */
+	/** International locations */
+	private Set<String> locations;
 	
+	/** Common words about time */
+	private Set<String> time;
+	
+	/** Common first names of male and female as
+	well as common last names*/
+	private Set<String> names;
+	
+	/**
+	 * Class RegexPatterns
+	 * Class to check if strings match a certain pattern.
+	 */
 	public RegexPatterns(){
 		locations = new HashSet<String>();
 		time = new HashSet<String>();
+		names = new HashSet<String>();
 		try {
 			FileReader file = null;
 			file = new FileReader(COUNTRIES_LIST);
@@ -58,6 +73,9 @@ public class RegexPatterns {
 			file = new FileReader(TIME_LIST);
 			createDictionaryForList(this.time, file);
 			file.close();
+			file = new FileReader(NAME_LIST);
+			createDictionaryForList(this.names, file);
+			file.close();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
@@ -65,6 +83,13 @@ public class RegexPatterns {
 		}
 	}
 	
+	/**
+	 * Help function to create dictionaries for our .txt files to help classify when
+	 * algorithm is unsure of the classification.
+	 * @param set
+	 * @param file
+	 * @throws IOException
+	 */
 	private void createDictionaryForList(Set<String> set, FileReader file) throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(file);
 		String line;
@@ -80,32 +105,19 @@ public class RegexPatterns {
 	 * @param text the text
 	 * @return true, if is name
 	 */
-	public static boolean isName(String text) {
-		Pattern pattern = Pattern.compile(NAME);
-		Matcher matcher = pattern.matcher(text);
-		return matcher.matches();
+	public boolean isName(String text) {
+		return names.contains(text);
 	}
 	
-	
+	/**
+	 * Check if a text string matches a entry in our location knowledge.
+	 * @param text
+	 * @return
+	 */
 	public boolean isLocation(String text) {
 		return locations.contains(text);
 	}
-	
-//	public static ArrayList<String> findNames(String text) {
-//		// Useless.
-//		ArrayList<String> matches = new ArrayList<String>();
-//		Pattern pattern = Pattern.compile(NAME);
-//		Matcher matcher = pattern.matcher(text);
-//		int startIndex = 0;
-//		while(startIndex != text.length()-1) {
-//			if(!matcher.find(startIndex)) {
-//				break;
-//			}
-//			String match = text.substring(matcher.start(), startIndex = matcher.end());
-//			matches.add(match);
-//		}
-//		return matches;
-//	}
+
 	
 	/**
 	 * Checks if is date.
@@ -117,48 +129,10 @@ public class RegexPatterns {
 		if(time.contains(text)) {
 			return true;
 		}
-		Pattern pattern_eu = Pattern.compile(DATE_EUROPEAN);
-		Matcher matcher_eu = pattern_eu.matcher(text);
-		Pattern pattern_us = Pattern.compile(DATE_US);
-		Matcher matcher_us = pattern_us.matcher(text);
-		Pattern pattern_time = Pattern.compile(YEAR_PATTERN);
-		Matcher matcher_time = pattern_time.matcher(text);
-		Pattern pattern_year = Pattern.compile(YEAR_MONTH_DAY);
-		Matcher matcher_year = pattern_year.matcher(text);
-		return matcher_eu.matches() 
-				|| matcher_us.matches() 
-				|| matcher_time.matches()
-				|| matcher_year.matches();
+		return text.matches(YEAR_PATTERN) || text.matches(DATE_EUROPEAN)
+				|| text.matches(DATE_US) || text.matches(YEAR_MONTH_DAY);
 	}
-	
-//	public static ArrayList<String> findDates(String text) {
-//		ArrayList<String> dates = new ArrayList<String>();
-//		
-//		Pattern pattern_eu = Pattern.compile(DATE_EUROPEAN);
-//		Matcher matcher_eu = pattern_eu.matcher(text);
-//		int startIndex = 0;
-//		while(startIndex != text.length()-1) {
-//			if(!matcher_eu.find(startIndex)) {
-//				break;
-//			}
-//			String match = text.substring(matcher_eu.start(), startIndex = matcher_eu.end());
-//			dates.add(match);
-//		}
-//		
-//		Pattern pattern_us = Pattern.compile(DATE_US);
-//		Matcher matcher_us = pattern_us.matcher(text);
-//		startIndex = 0;
-//		while(startIndex != text.length()-1) {
-//			if(!matcher_us.find(startIndex)) {
-//				System.out.println("No match!");
-//				break;
-//			}
-//			String match = text.substring(matcher_us.start(), startIndex = matcher_us.end());
-//			dates.add(match);
-//		}
-//		return dates;
-//	}
-	
+		
 	/**
 	 * The main method.
 	 *
@@ -167,6 +141,10 @@ public class RegexPatterns {
 	public static void main(String[] args) {
 		RegexPatterns pt = new RegexPatterns();
 		System.out.println(pt.isLocation("Norway"));
+		System.out.println(pt.isTime("2002"));
+		System.out.println(pt.isTime("2002-02-01"));
+		System.out.println(pt.isTime("01-02-2014"));
+		System.out.println(pt.isTime("01.02.2014"));
 	}
 	
 }
