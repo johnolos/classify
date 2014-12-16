@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import patterns.RegexPatterns;
+
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
@@ -47,6 +49,9 @@ public class Viterbi {
 	/** The current table */
 	Table<Entity, String, Double> currentTable;
 	
+	/** Regex Patterns */
+	RegexPatterns regex;
+	
 	
 	/**
 	 * Instantiates a new Viterbi object.
@@ -75,6 +80,8 @@ public class Viterbi {
 		prevState = null;
 		currentTable = null;
 		probabilityStates = null;
+		
+		this.regex = new RegexPatterns();
 	}
 	
 	/**
@@ -85,24 +92,35 @@ public class Viterbi {
 		if(obs == null)
 			throw new ObservationException("Insert new observations");
 		probabilityStates = new ArrayList<Entity>();
+		Entity regex;
 		for(String word : obs) {
 			currentTable = HashBasedTable.create();
 			double maxValue = -100.0;
 			Entity maxState = null;
 			for(Entity state : states) {
 				double value = probability(state, word);
-				System.out.println("Entity: " + state + " Word: " + word + " Value: " + value);
+//				System.out.println("Entity: " + state + " Word: " + word + " Value: " + value);
 				if(value > maxValue) {
 					maxValue = value;
 					maxState = state;
 				}
 				currentTable.put(state, word, value);
 			}
+			if(maxState == Entity.OTHER) {
+				if((regex = checkRegexPatterns(word)) != null) {
+					maxState = regex;
+					System.out.println("Match " + word + maxState);
+					maxValue = -0.5;
+					currentTable.put(maxState, word, maxValue);
+				}
+			}
 			probabilityStates.add(maxState);
 			prevTable = currentTable;
-			obs = null;
 		}
+		obs = null;
 	}
+	
+	
 	
 	/**
 	 * Get the probability for state + word combination.
@@ -129,7 +147,6 @@ public class Viterbi {
 			prob = emiValue + maxValue;
 //			if(emi > 0.0) System.out.println("Emivalue: " + emiValue + " MaxValue: " + maxValue + " Prob: " + prob);
 		}
-//		System.out.println("Prob: " + prob);
 		return Math.pow(2, prob);
 	}
 	
@@ -167,6 +184,17 @@ public class Viterbi {
 		return currentTable;
 	}
 	
+	private Entity checkRegexPatterns(String text) {
+		Entity plausible = null;
+		if(regex.isLocation(text)) {
+			plausible = Entity.LOCATION;
+		}
+		if(regex.isTime(text)) {
+			plausible = Entity.TIME;
+		}
+		return plausible;
+	}
+	
 	/**
 	 * Get states the algorithm finds for each state.
 	 * @return List<Entity> List of Entity states.
@@ -184,6 +212,10 @@ public class Viterbi {
 	 */
 	public void setObservations(List<String> obs) {
 		this.obs = obs;
+		this.prevState = null;
+		this.currentTable = null;
+		this.probabilityStates = null;
+		this.prevTable = null;
 	}
 	
 	public class ObservationException extends Exception {

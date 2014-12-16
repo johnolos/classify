@@ -50,7 +50,7 @@ public class StartProbability {
 	 * Prints the prob.
 	 */
 	private void printProb() {
-		System.out.println("C: " + startProb.get(Entity.COUNTRY));
+		System.out.println("L: " + startProb.get(Entity.LOCATION));
 		System.out.println("O: " + startProb.get(Entity.OTHER));
 		System.out.println("P: " + startProb.get(Entity.PERSON));
 		System.out.println("T: " + startProb.get(Entity.TIME));
@@ -76,7 +76,7 @@ public class StartProbability {
 		prob.setCounter(organization);
 		startProb.put(Entity.ORGAINIZATION,prob.getCalculatedProbability());
 		prob.setCounter(country);
-		startProb.put(Entity.COUNTRY, prob.getCalculatedProbability());
+		startProb.put(Entity.LOCATION, prob.getCalculatedProbability());
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class StartProbability {
 //					System.out.println("ORG");
 					organization++;
 					break;
-				case COUNTRY:
+				case LOCATION:
 //					System.out.println("C");
 					country++;
 					break;
