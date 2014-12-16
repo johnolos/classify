@@ -41,7 +41,7 @@ To make the name entity recognition system we ended up using the viterbi algorit
 At the start of the project we looked closer at doing a sequence model name entity recognition system, but after reading papers for a couple of weeks and turning up empty in the search for an algorithm to follow. Then we choose to chase down the hidden Markov Model approach to name entity recognition, after some paper reading we ended up using the viterbi algorithm.
 
 \subsection{Training Data Set}
-To start the project we first made the file to read the words and their entity from the training data sets, the training data sets needs to be built by sentences where every word has they entity after it. This means that the data in the text files can be written in two different ways. Either you can have one word and its entity in one line, or you can have multiple words and their entity in one line see figure \ref{fig:trainingData} %MAYBE WE HAVE TO CHANGE THE FIGS
+To start the project we first made the file to read the words and their entity from the training data sets, the training data sets needs to be built by sentences where every word has they entity after it. This means that the data in the text files can be written in two different ways. Either you can have one word and its entity in one line, or you can have multiple words and their entity in one line see figure \ref{fig:trainingData}. Our training data set looks like the dataset you see on the right hand side of the figure, it also contains 2518 classified words which we have classified our self. This means that some words in the training data may have one or more entitie like New which is a location when it is in context with New York or it may be other when it is just by itself.
 
 \begin{figure}[here]
 \centering
@@ -189,32 +189,32 @@ The table \ref{tab:Table of words entity with hidden Markov model} shows how it 
 
 \subsection{Result}
 Our result is a name entity recognition system which identifies the different words entity based on previously words entity the sentence, by hidden Markov model which bases the decisions on the start, emission  and transmission probability.\\
-By using regex expressions we have tried to help the system identify the correct entity for the different words, regex should help identify time, persons and countries. 
+By using regex expressions we have tried to help the system identify the correct entity for the different words, we only use the regex expressions to help us when the viterbi algorithm gives a word enity other. This is because when the algorithm gives the enitity other it is because it is the entity which most often occur in texts the regex expressions we have made should help us to identify time, persons and countries. 
 
 \subsection{Statistics}
 The statistics show both the error and correctness rate of our implementation of the viterbi algorithm.
 \begin{equation}
-\text{error rate} = \frac{\text{number of wrong entities}}{\text{total number of words}}
+\text{correct rate} = \frac{\text{number of correct}}{\text{total number of words}}
 \end{equation}
 \begin{equation}
-\text{correct rate} = \frac{\text{number of correct}}{\text{total number of words}}
+\text{error rate} = \frac{\text{number of wrong entities}}{\text{total number of words}} = 1-\text{Correct rate}
 \end{equation}
 
 \begin{table}[here]
 \centering
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
- & text 1 & text 2 & text 3\\
+ & Article 1 & Article 2 & Article 3 & Article 4\\
 \hline
-Correct rate & & &  \\
+Correct rate & 0.841 & 0.902 & 0.846 & 0.880  \\
 \hline
-Error rate & & &\\
+Error rate & 0.159 & 0.098 & 0.154 & 0.120 \\
 \hline
 \end{tabular}
-\caption{Correct and Error rate}
-\label{tab:Correct and Error rate}
+\caption{Correct and Error rate from first run}
+\label{tab:Correct and Error rate from first run}
 \end{table}
-By looking at the correct and Error rate we can see that %Need something here
+By looking at the correct and Error rate we can see that we are 
 
 \section{Evaluation}
 We strongly agree that we should have made the choice to either ask for the teaching assistants help og to make the switch from the sequence modeling approach to name entity recognition, because we found that the time frame was a bit short when we started working on the code for the project so late. Due to the late start we did not have so much time to tweak the algorithm and program for better performance. We could also have asked for the teaching assistants help but we thought we could find a solution to the problems we had finding a good description for sequence modeling. We could also probably have made a cleaner code but since we experienced trouble with the time we prioritized to get the system up and running and working as it should.
@@ -255,7 +255,9 @@ Dan Jurafsky, Christopher Manning
 \end{thebibliography}
 
 \section{Program Listings}
-To run this name entity recognition system you will need a IDE like eclipse, and you will also need to import the libraries guava-18.0.jar and jsoup-1.8.1.jar(you will get these jar files when you download the project from github https://github.com/johnolos/classify or when you receive it). To use the imported libraries follow these steps:\\
+To run this name entity recognition system you will need a IDE like eclipse, and you will also need to import the libraries guava-18.0.jar and jsoup-1.8.1.jar(you will get these jar files when you download the project from github\\
+https://github.com/johnolos/classify or when you receive it).\\
+To use the imported libraries follow these steps(in eclipse):\\
 1. Import project to IDE\\
 2. Right click on project in package explorer\\
 3. Click on build path $\rightarrow$ Configure build path\\
@@ -263,4 +265,39 @@ To run this name entity recognition system you will need a IDE like eclipse, and
 5. Go to folder with project\\
 6. Click on jars called guava-18.0.jar and jsoup-1.8.1.jar and click add.\\
 7. Program should now be working.
+\clearpage
+
+\section{Appendix}
+\begin{figure}[here]
+\centering
+\includegraphics{fig/firstRun.jpg}
+\caption{Print Screen from first run}
+\label{fig:Print screen from first run}
+\includegraphics{fig/secondRun.jpg}
+\caption{Print screen from second run}
+\label{fig:Print screen from second run}
+\end{figure}
+As you can see from figure \ref{fig:Print screen from first run} and \ref{fig:Print screen from second run} the results are the same in both runs.
+
+
+
+
 \end{document}
+
+\introduction
+This is one of the most important components of the report. It should begin with a clear statement of what the project is about so that the nature and scope of the project can be understood by a lay reader. It should summarise everything you set out to achieve, provide a clear summary of the project's background, relevance and main contributions. The introduction should set the context for the project and should provide the reader with a summary of the key things to look out for in the remainder of the report. When detailing the contributions it is helpful to provide pointers to the section(s) of the report that provide the relevant technical details. The introduction itself should be largely non-technical. It is useful to state the main objectives of the project as part of the introduction. However, avoid the temptation to list low-level objectives one after another in the introduction and then later, in the evaluation section (see below), say reference to like "All the objectives of the project have been met...".
+
+\Background
+The background section of the report should set the project into context and give the proposed layout for achieving the project goals. The background section can be included as part of the introduction but is usually better as a separate chapter, especially if the project involved significant amount of ground work. When referring to other pieces of work, cite the sources where they are referred to or used, rather than just listing them at the end.
+
+\bodyOfReport
+The central part of the report usually consists of three or four chapters detailing the technical work undertaken during the project. The structure of these chapters is highly project dependent. They can reflect the chronological development of the project, e.g. design, implementation, experimentation, optimisation, evaluation etc. If you have built a new piece of software you should describe and justify the design of your program at some high level, possibly using an approved graphical formalism such as UML. It should also document any interesting problems with, or features of, your implementation. Integration and testing are also important to discuss in some cases. You need to discuss the content of these sections thoroughly with your supervisor.
+
+\Evaluation
+Be warned that many projects fall down through poor evaluation. Simply building a system and documenting its design and functionality is not enough to gain top marks. It is extremely important that you evaluate what you have done both in absolute terms and in comparison with existing techniques, software, hardware etc. This might involve quantitative evaluation and qualitative evaluation such as expressibility, functionality, ease-of-use etc. At some point you should also evaluate the strengths and weaknesses of what you have done. Avoid statements like "The project has been a complete success and we have solved all the problems asssociated with ...! It is important to understand that there is no such thing as a perfect project. Even the very best pieces of work have their limitations and you are expected to provide a proper critical appraisal of what you have done.
+
+\Bibliography
+This consists of a list of all the books, articles, manuals etc. used in the project and referred to in the report. You should provide enough information to allow the reader to find the source. In the case of a text book you should quote the name of the publisher as well as the author(s). A weakness of many reports is inadequate citation of a source of information. It's easy to get this right so there are no excuses. Each entry in the bibliography should list the author(s) and title of the piece of work and should give full details of where it can be found.
+
+\Conclusion
+The project's conclusions should list the things which have been learnt as a result of the work you have done. For example, "The use of overloading in C++ provides a very elegant mechanism for transparent parallelisation of sequential programs". Avoid tedious personal reflections like "I learned a lot about C++ programming..." It is common to finish the report by listing ways in which the project can be taken further. This might, for example, be a plan for doing the project better if you had a chance to do it again, turning the project deliverables into a more polished end product.
