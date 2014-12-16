@@ -54,6 +54,7 @@ public class ReadFileTraining {
 		System.out.println(classification.get(word));
 	}
 	
+	@SuppressWarnings("unused")
 	private void printLines() {
 		System.out.println("lines");
 		for(int i=0; i<this.lines.size();i++) {
@@ -83,7 +84,7 @@ public class ReadFileTraining {
 					if(isLastWord(word)) {
 						word = removeDot(word);
 					}
-					System.out.println(word);
+//					System.out.println(word);
 					addClassification(word,Entity.getEntity(ent));
 //					printwords(word);
 				}
@@ -103,6 +104,7 @@ public class ReadFileTraining {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void addLine(String line) {
 		this.lines.add(line);
 	}

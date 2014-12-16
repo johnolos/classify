@@ -117,7 +117,7 @@ public class Viterbi {
 				// our knowledge and Regex expressions.
 				if((regex = checkRegexPatterns(word)) != null) {
 					maxState = regex;
-					System.out.println("Match " + word + maxState);
+//					System.out.println("Match " + word + maxState);
 					maxValue = KNOWLEDGE_INFLUENCE;
 					currentTable.put(maxState, word, maxValue);
 				}
@@ -219,6 +219,9 @@ public class Viterbi {
 			}
 			if(regex.isLocation(temp)) {
 				plausible = Entity.LOCATION;
+			}
+			if(plausible == Entity.OTHER) {
+				plausible = Entity.ORGAINIZATION;
 			}
 		}
 		if(regex.isTime(temp)) {

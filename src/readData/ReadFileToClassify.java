@@ -34,7 +34,7 @@ public class ReadFileToClassify {
 		this.lines = new ArrayList<String>();
 		this.wordsWithoutDot = new ArrayList<String>();
 		read(path);
-		printLines();
+//		printLines();
 	}
 	
 	/**
