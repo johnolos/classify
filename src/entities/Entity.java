@@ -9,13 +9,13 @@ public enum Entity {
 	/** The other. */
 	OTHER("O"),
 	/** The person. */
-	PERSON("PER"),
+	PERSON("P"),
 	/** The orgainization. */
 	ORGAINIZATION("ORG"),
 	/** The time. */
 	TIME("T"),
 	/** The country. */
-	COUNTRY("C");
+	LOCATION("L");
 	
 	/** The entity. */
 	String entity;
@@ -45,10 +45,10 @@ public enum Entity {
 	public static Entity getEntity(String type) {
 		switch(type) {
 		case "O": return Entity.OTHER;
-		case "PER": return Entity.PERSON;
+		case "P": return Entity.PERSON;
 		case "ORG": return Entity.ORGAINIZATION;
 		case "T": return Entity.TIME;
-		case "C": return Entity.COUNTRY;
+		case "L": return Entity.LOCATION;
 		default: return Entity.OTHER;
 		}
 	}

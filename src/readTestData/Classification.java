@@ -4,7 +4,11 @@ import entities.Entity;
 
 public class Classification {
 	
-	// Unused
-	String word;
-	Entity classification;
+	public String word;
+	public Entity classification;
+	
+	public Classification(String word, Entity classification) {
+		this.word = word;
+		this.classification = classification;
+	}
 }

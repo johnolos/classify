@@ -49,7 +49,7 @@ public class EmissionProbability {
 	 */
 	private void printEmission() {
 		System.out.println(emiProb.row(Entity.ORGAINIZATION));
-		System.out.println(emiProb.row(Entity.COUNTRY));
+		System.out.println(emiProb.row(Entity.LOCATION));
 		System.out.println(emiProb.row(Entity.OTHER));
 		System.out.println(emiProb.row(Entity.PERSON));
 		System.out.println(emiProb.row(Entity.TIME));

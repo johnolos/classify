@@ -19,16 +19,17 @@ import java.util.Scanner;
 
 import org.jsoup.Jsoup;
 
+import readTestData.Classification;
 import entities.Entity;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ClassifyManually.
  */
-public class ClassifyManually {
+public class ManualClassification {
 	
 	/** The classified words. */
-	Map<String, Entity> classifiedWords;
+	ArrayList<Classification> classifiedWords;
 	
 	/** The in. */
 	BufferedReader in;
@@ -38,9 +39,9 @@ public class ClassifyManually {
 	 *
 	 * @param file the file
 	 */
-	public ClassifyManually(File file) {
+	public ManualClassification(File file) {
 		try {
-			classifiedWords = new HashMap<String, Entity>();
+			classifiedWords = new ArrayList<Classification>();
 			in = new BufferedReader(new FileReader(file));
 			Scanner user = new Scanner(System.in);
 			classifyWords(getWords(false), user);
@@ -57,9 +58,9 @@ public class ClassifyManually {
 	 *
 	 * @param url the url
 	 */
-	public ClassifyManually(URL url) {
+	public ManualClassification(URL url) {
 		try {
-			classifiedWords = new HashMap<String, Entity>();
+			classifiedWords = new ArrayList<Classification>();
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			Scanner user = new Scanner(System.in);
 			classifyWords(getWords(true), user);
@@ -82,7 +83,6 @@ public class ClassifyManually {
 		while((line = in.readLine()) != null) {
 			if(html)
 				line = Jsoup.parse(line).text();
-			line = line.replaceAll("[^a-zA-Z]+"," ");
 			words.addAll(Arrays.asList(line.split(" ")));
 		}
 		return words;
@@ -95,35 +95,49 @@ public class ClassifyManually {
 	 * @param user the user
 	 */
 	public void classifyWords(List<String> words, Scanner user) {
+		int wordSize = words.size();
+		System.out.println("Number of words: " + wordSize);
+		int count = 0;
 		for(String word : words) {
+			int remainingWords = wordSize - count;
+			System.out.println("Words remaining: " + remainingWords);
 			if(word.equals(""))
 				continue;
-			System.out.println("Classify " + word + ":");
-			String input = user.nextLine();
-			if(input.equals("exit"))
-				break;
+			String firstLetter = word.substring(0, 1);
+			String input = "";
+			if(firstLetter.matches("[a-z]")) {
+				System.out.println("OTHER");
+			} else {
+				System.out.println("Classify " + word + ":");
+				input = user.nextLine();
+				if(input.equals("exit"))
+					break;
+				if(input.equals(""))
+					input = "O";
+			}
+			count++;
 			Entity entity = Entity.getEntity(input);
-			classifiedWords.put(word, entity);
+			classifiedWords.add(new Classification(word, entity));
 		}
 	}
 
 	/**
 	 * Write classified word.
 	 *
-	 * @param map the map
+	 * @param classifiedWords2 the map
 	 * @param user the user
 	 * @throws FileNotFoundException the file not found exception
 	 * @throws UnsupportedEncodingException the unsupported encoding exception
 	 */
-	public static void writeClassifiedWord(Map<String, Entity> map, Scanner user) 
+	public static void writeClassifiedWord(ArrayList<Classification> arrayOfClassification, Scanner user) 
 			throws FileNotFoundException, UnsupportedEncodingException {
 		System.out.println("Filename: ");
 		String filename = user.nextLine();
 		if (filename.equals("exit"))
 			return;
 		PrintWriter writer = new PrintWriter(filename, "UTF-8");
-		for(Map.Entry<String, Entity> entry : map.entrySet()) {
-			writer.println(entry.getKey() + " " + entry.getValue());
+		for(Classification classifiedWord : arrayOfClassification) {
+			writer.println(classifiedWord.word + " " + classifiedWord.classification);
 		}
 		writer.close();
 	}
@@ -134,11 +148,7 @@ public class ClassifyManually {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		try {
-			URL u = new URL("http://en.wikipedia.org/wiki/Point_in_polygon");
-			ClassifyManually classify = new ClassifyManually(u);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
+		File file = new File("article.txt");
+		ManualClassification classify = new ManualClassification(file);
 	}
 }
