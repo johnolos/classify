@@ -27,16 +27,16 @@ public class Main {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		ReadFileTraining read = new ReadFileTraining("testDocs/test2.txt");
+		ReadFileTraining read = new ReadFileTraining("testDocs/training.txt");
 		System.out.println("Start");
 		StartProbability startProb = new StartProbability(read.getWordList(), read.getEntityList());
 		System.out.println("Emission");
 		EmissionProbability emi = new EmissionProbability(read.getEntityList(), read.getWordList());
 		System.out.println("Transmission");
-		TransmissionProbability trans = new TransmissionProbability("testDocs/test2.txt");
+		TransmissionProbability trans = new TransmissionProbability("testDocs/training.txt");
 		trans.runTransmissionProbabilistic();
 		System.out.println("Classify this");
-		ReadFileToClassify classificationFile = new ReadFileToClassify("testDocs/test4.txt");
+		ReadFileToClassify classificationFile = new ReadFileToClassify("testDocs/text.txt");
 		System.out.println("Classify");
 //		ClassificationOfData classifyData = new ClassificationOfData(classificationFile.getWords(),read.getHashMap(),prob.getStartProbability(),trans.getTable(),emi.getTable());
 //		classifyData.printClassifiedWords();
@@ -59,7 +59,7 @@ public class Main {
 			}
 		}
 		
-		ReadClassifiedFile classified = new ReadClassifiedFile("testDocs/test3.txt");
+		ReadClassifiedFile classified = new ReadClassifiedFile("testDocs/textClassified.txt");
 //		Statistics statistics = new Statistics(classifyData.getClassifiedWords(), classified.getClassificated());
 //		System.out.println("Correct " + statistics.getCorrect());
 //		System.out.println("Error " + statistics.getError());
