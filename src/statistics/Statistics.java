@@ -36,6 +36,10 @@ public class Statistics {
 	
 	private List<Entity> arrayClassified;
 	
+	private ArrayList<Entity> classifiedArrayList;
+	
+	private ArrayList<Entity> selfClassifiedArrayList;
+	
 	
 	/**
 	 * Instantiates a new statistics.
@@ -54,19 +58,34 @@ public class Statistics {
 		calcErrorRate();
 	}
 	
+	//Redundant NOT IN USE
 	public Statistics(List<Entity> file, HashMap<String, Entity> classified) {
 		this.arrayClassified = file;
 		this.classified=classified;
 		this.total = this.arrayClassified.size();
 		this.correct=0;
 		this.error=0;
-		calcArrayHashStatistics();
-		
 	}
 	
-	private void calcArrayHashStatistics() {
-		// TODO Auto-generated method stub
-		
+	public Statistics(ArrayList<Entity> hmmClassified, ArrayList<Entity> selfClassified) {
+		this.classifiedArrayList=hmmClassified;
+		this.selfClassifiedArrayList=selfClassified;
+		this.total=hmmClassified.size();
+		this.correct=0;
+		this.error=0;
+		calculateArrayListStatistics();
+		calcCorrectRate();
+		calcErrorRate();
+	}
+
+	private void calculateArrayListStatistics() {
+		for(int i=0; i<this.classifiedArrayList.size();i++) {
+			if(classifiedArrayList.get(i)==selfClassifiedArrayList.get(i)) {
+				addCorrect();
+			} else {
+				addError();
+			}
+		}
 	}
 
 	/**

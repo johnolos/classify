@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -18,6 +20,8 @@ public class ReadClassifiedFile {
 	/** The classificated. */
 	private HashMap<String, Entity> classificated;
 	
+	private ArrayList<Entity> entities;
+	
 	/**
 	 * Instantiates a new read classified file.
 	 *
@@ -25,6 +29,7 @@ public class ReadClassifiedFile {
 	 */
 	public ReadClassifiedFile(String path) {
 		this.classificated = new HashMap<String, Entity>();
+		this.entities = new ArrayList<Entity>();
 		getCorrectClassification(path);
 	}
 
@@ -49,6 +54,7 @@ public class ReadClassifiedFile {
 						word = removeDot(word);
 					}
 					addClassified(word,Entity.getEntity(entity));
+					this.entities.add(Entity.getEntity(entity));
 				}
 				line = bufferedReader.readLine();
 			}
@@ -103,6 +109,10 @@ public class ReadClassifiedFile {
 	 */
 	public HashMap<String, Entity> getClassificated() {
 		return this.classificated;
+	}
+	
+	public ArrayList<Entity> getEntities() {
+		return this.entities;
 	}
 	
 }
