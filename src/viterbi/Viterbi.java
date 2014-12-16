@@ -186,10 +186,23 @@ public class Viterbi {
 	
 	private Entity checkRegexPatterns(String text) {
 		Entity plausible = null;
-		if(regex.isLocation(text)) {
-			plausible = Entity.LOCATION;
+		String temp = text;
+		if(Character.isUpperCase(temp.charAt(0))) {
+			if(temp.contains("'")) {
+				if(temp.contains("'s")) {
+					temp = temp.replaceAll("'s", "");
+				} else if(temp.contains("s'")) {
+					temp = temp.replace("es'", "");
+				}
+			}
+			if(regex.isName(temp)) {
+				plausible = Entity.PERSON;
+			}
+			if(regex.isLocation(temp)) {
+				plausible = Entity.LOCATION;
+			}
 		}
-		if(regex.isTime(text)) {
+		if(regex.isTime(temp)) {
 			plausible = Entity.TIME;
 		}
 		return plausible;

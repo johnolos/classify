@@ -18,22 +18,17 @@ public class Test {
 		String line;
 		while((line = in.readLine()) != null) {
 			Entity classification = null;
-			if(RegexPatterns.isTime(line)) {
-				classification = Entity.TIME;
-			}
-			if(pattern.isCountry(line)) {
-				classification = Entity.LOCATION;
-			}
+//			if(RegexPatterns.isTime(line)) {
+//				classification = Entity.TIME;
+//			}
+//			if(pattern.isCountry(line)) {
+//				classification = Entity.LOCATION;
+//			}
 			System.out.println(line + ": " + classification);
 		}
 	}
 	
 	static public void main(String[] args) {
-		File file = new File("testDocs/testRegexExpressions.txt");
-		try {
-			Test test = new Test(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		System.out.println("Hardman's".replaceAll("'s", ""));
 	}
 }

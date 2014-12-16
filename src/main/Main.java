@@ -27,8 +27,8 @@ public class Main {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		String trainingFile = "testDocs/trainingTrivial.txt";
-		String testFile = "testDocs/testTrivial.txt";
+		String trainingFile = "testDocs/trainingArticles.txt";
+		String testFile = "testDocs/testArticle.txt";
 		ReadFileTraining read = new ReadFileTraining(trainingFile);
 		System.out.println("Start");
 		StartProbability startProb = new StartProbability(read.getWordList(), read.getEntityList());
