@@ -49,6 +49,7 @@ public class ReadClassifiedFile {
 				StringTokenizer token = new StringTokenizer(line," ");
 				while(token.hasMoreTokens()) {
 					String word = token.nextElement().toString();
+//					System.out.println(word);
 					String entity = token.nextElement().toString();
 					if(isLastWord(word)) {
 						word = removeDot(word);

@@ -29,10 +29,12 @@ public class Main {
 		String[] articleFiles = {
 				"testDocs/testArticle.txt",
 				"testDocs/testArticle2.txt",
+				"testDocs/testArticle3.txt",
 				"testDocs/testArticle4.txt"};
 		String[] classifiedFiles = {
 				"testDocs/textClassified.txt",
 				"testDocs/textClassified2.txt",
+				"testDocs/textClassified3.txt",
 				"testDocs/textClassified4.txt"};
 		String trainingFile = "testDocs/trainingArticles.txt";
 		for(int j = 0; j < articleFiles.length; j++) {
