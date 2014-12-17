@@ -27,21 +27,21 @@
 
 \pagenumbering{arabic}
 \section{Abstract}
-For the project in CS263 data and knowledge bases we choose to look closer at a name entity recognition(NER) system, we choose this because we thought that it sounded like a interesting project and it whould teach us more about machine learning techniques\\
-The meaning of a name entity regognition system is to classify words into different entitys we choose to classify on the entitys Organization, Location, Time, Person and Other. To solve this problem we approached the problem using the viterbi algorithm, which uses a hidden markov model to find the given entites probability based on the previous entities in sentene. With the name enitity recognition system we aim to answer which kind of entity each word is, entities we want to find is Other, Location, Person, Time and Orgainization.
+For the project in CS263 - Data and Knowledge Bases we chose to look closer at a Name Entity Recognition (NER) system. We chose this because it appealed as interesting project and it would teach us more about machine learning techniques\\
+The meaning of a name entity regognition system is to classify words into different entities. In this project we chose to support and classify the entities; Organization, Location, Time, Person and Other. To solve this problem we approached the problem using The Viterbi Algorithm, which uses a hidden markov model to find the given entity probabilities based on the previous entities in the sentence. With the name enitity recognition system we aim to answer which kind of entity each word is and give statistics of how accurate our implementation is once we are finished.
 
 \section{Introduction}
-At the beginning of the project we looked into making the name entity recognition system using a sequence model, which the neme entity recognition system made at Stanford is using we wanted to use this because after some reading we thought it would give us the best final result. But after reading some papers we did not find any good description on how to implement it. Then after some consideration and searching into other ways to do name entity recognition we found the viterbi algorithm and decided to implement it in java, the viterbi algorithm uses hidden markov model to find the highest probability of a words entity given by the previous entities.
+At the beginning of the project we looked into making the Name Entity Recognition system using a sequence model after reading that this was the approach Stanford used in their NER system. However, after more in-depth reading on the subject we quickly realized that there was not many research papers out there which gave a good idea how to go about it as well as give a fairly good description on how to implement the actual parts of the system. After some consideration and searching into other ways to do name entity recognition we found two good sources on the Viterbi Algorithm and decided to implement it in java. The Viterbi Algorithm uses hidden markov model to find the highest probability of a word being a certain entity given the previous entities. The algorithm can be used in a scope of a whole document. However, we decided to set the scope on the individual sentences instead.
 
 \section{Background}
-To make the name entity recognition system we ended up using the viterbi algorithm and hidden markov model, since none of us have had anything to do with hiddem markov models earlier we where not quite shure how to implement it. To start the project we started start probability, emission probability and a transition matrix which probabilities based on the training data set. By using these probabilities we can use the hidden markov model to find the highest probability of a word being a any of the five entities we aim to classify. Our goal is to get the algorithm working before we start to find or make training sets which is of decent size, this is because we think the hardest part of the project is to make the hidden markov model work. To check if the algorithm is working we will only be using a small training set which we have created, the downsize of using a small training data set is that you will get terrible results. It is important to remember to have training data sets be built up by sentences because it will help the algorithm to classify based on the "flow" in the entities. Our hope is to get a success probability around 80\% for our name entity recognition system.
+To implement The Viterbi Algorithm, we had to look into Hidden Markov Model as none of us have had any significance background implemention systems which uses these models into practise. After some time we got eased into how they were made up and we began the project by implementing start probability model, emission probability model and a transition matrix model which probabilities are based on the training data set. By using these probabilities we can use the hidden markov model to find the highest probability of a word being any of the five entities we aim to classify. Our goal is to get the algorithm working before we start to find or make training sets which is of decent size, this is because we think the hardest part of the project is to make the hidden markov model work. To check if the algorithm is working we will only be using a small training set which we have created, the downsize of using a small training data set is that you will get terrible results. It is important to remember to have training data sets be built up by sentences because it will help the algorithm to classify based on the "flow" in the entities. Our hope is to get a accuracy of around 80\% for our classifications made by our name entity recognition system.
 
 
 \section{Body of report}
-At the start of the project we looked closer at doing a sequence model name entity recognition system, but after reading some papers and turning up empty in the search for an algorithm to follow. Then we choose to chase down the hidden markov model approach to name entity recognition, after reading paper reading we ended up using the viterbi algorithm.
+At the start of the project we looked closer at doing a sequence model name entity recognition system, but after reading some papers and turning up empty in the search for an algorithm to follow. Then we chose to chase down the hidden markov model approach to name entity recognition, after reading paper reading we ended up using The Viterbi Algorithm.
 
 \subsection{Training Data Set}
-To start the project we first made the file to read the words and their entity from the training data set(s), the training data set(s) word sequence needs to be built up like real sentences because this will improve the entity prediciton in the program. The words will also need to have their entity written after it with a space between them. This means that the data in the text files can be written in two different ways. Either you can have one word and its entity in one line, or you can have multiple words and their entity in one line see figure \ref{fig:trainingData}. Our training data set looks like the dataset you see on the right hand side of the figure, it also contains 2518 classified words which we have classified manually. This means that some words in the training data may have one or more entity like New which is a location when it is in context with New York or it may be other when it is just by itself.
+To begin with we agreed on a way how a file is structured to read words and their classification. The java class implementation of this was used to read from the training data set(s). The training data sets needed to be segmented into word sequences because only real sentences will be the only way to effectivly improve our prediction when we want to classify more advanced texts such as articles and blog posts. We went ahead with a word and classification seperated with space between them. This means that the data in the text files can be written in two different ways. Either you can have one word and its entity in one line, or you can have multiple words and their entity in one line see figure \ref{fig:trainingData}. Our training data set looks like the dataset you see on the right hand side of the figure, it also contains 2518 classified words which we have classified manually. This means that some words in the training data may have one or more entity like New which is a location when it is in context with New York or it may be other when it is just by itself when no particular context is given.
 
 \begin{figure}[here]
 \centering
@@ -51,23 +51,23 @@ To start the project we first made the file to read the words and their entity f
 \label{fig:trainingData}
 \end{figure}
 
-We have made a enum java class which holds the different entities the program is to classify, and in the file which reads in the training data set we use both hashmap and arraylists to keep track of the words and their entity, the reason for making so many lists is that they make it easier to calculate the different probabilities used by the hidden markov model even if they hold redundant information.
+We have made a enum java class which holds the different entities the program has to classify, and in the file which reads in the training data set we use both hashmap and arraylists to keep track of the words and their entity. The reasons for making so many lists is that they make it easier to calculate the different probabilities used by the hidden markov model even if they hold redundant information as well as ease the programming for ourselves.
 
 \subsection{Viterbi}
-When the reading of the training data set is done and all the data is in hashmaps or lists, we started with the viterbi algorithm. This algorithm uses the start probability, emission probability matrix and transmission probability matrix in the hidden markov model to find the best probability for a words entity.
+When the reading of the training data set is done and all the data is in hashmaps or lists, we started with The Viterbi Algorithm. This algorithm uses the start probability, emission probability matrix and transmission probability matrix in the Hidden Markov Model to find the best probability for a words entity.
 
 \subsubsection{Guava}
-Guava is a project by Google and contains some of their core libraries, for our project we are using the collections part in guava created by Google. This makes it easier to store the different values in the emission and transmission probability matrix. The data structure we used is called Table and value3 is given by the values in value1 and value2.
+Guava is a project by Google and contains some extended datastructures built on the core of the java language as well as some of the java core rewritten. For our project we are using the collections part in guava created by Google. This makes it easier to store the different values in the emission and transmission probability matrix. The data structure we used is called Table and value3 is given by the key values in value1 and value2.
 \begin{minted}{Java}
 Table<value1, value2, value3> table = HashBasedTable.create();
 table.row(value1); //returns a mapping of the different value2 to value3
 table.column(value2); //returns a mapping of the different value1 to value3
 table.get(value1,value2); //returns value3
 \end{minted}
-We found this library most useful because we needed a good way to store a probability which is decided by two variables, and it is used in both the emission, transmission probability matrix and the hidden markov model to store the updated values for each step.
+We found this library most useful because we needed a good way to store the probability model which is decided by two key variables, and it is used in both the emission, transmission probability matrix and as well as the hidden markov model to store the updated values for each iteration step the algorithm makes.
 
-\subsubsection{Start probability}
-To find the start probability we need to find the entity of the starting word in each sentence. And then divide this entities number by the total of sentences.\\
+\subsubsection{Start Probability}
+To find the start probability we need to find the entity of the starting word in each sentence. Then divide this entities number by the total of sentences.\\
 \begin{equation}
 \text{Start probability} = \frac{\text{number of start words with entity}}{\text{Toal number of sentences}}
 \end{equation}
@@ -85,14 +85,13 @@ $\frac{6}{12}$ & $\frac{1}{12}$ & $\frac{2}{12}$ & $\frac{1}{12}$ & $\frac{2}{12
 \caption{Start probability}
 \label{tab:startProbability}
 \end{table}
-
-\subsubsection{Emission probability matrix }
-The emission probability matrix is the probability of a specific word being a specific entity. If you look at table \ref{tab:emissionProbability} and the word Obama it has the probability of $\frac{1}{15}$ for person and zero for every other entity, this gives us that the word Obama is most likely a person.
+\clearpage
+\subsubsection{Emission Probability Matrix }
+The emission probability matrix is the probability of a specific word being a specific entity. If you look at table \ref{tab:emissionProbability} and the word Obama has the probability of $\frac{1}{15}$ for person and zero for every other entity. This tells us that the word Obama is most likely a person.
 \begin{equation}
 \text{Emission probability} = \frac{\text{number of specific word with entity}}{\text{Number of words with that entity}}
 \end{equation}
-\clearpage
-This means that the emission probability matrix will look like this only much bigger because you have to calculate the probability for each distinct word. To store the emission probability matrix we use the Table data structure from Google's guava library.
+This means that the emission probability matrix will look like this only much bigger because you have to calculate the probability for each distinct word. To store The Emission Probability Matrix we use the table data structure from Google's guava library.
 \begin{table}[here]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
@@ -114,8 +113,8 @@ Location & $\frac{0}{15}$ & $\frac{0}{15}$ & $\frac{0}{15}$ & $\frac{0}{15}$ & $
 \label{tab:emissionProbability}
 \end{table}
 
-\subsubsection{Transmission probability matrix }
-The Transmission probability matrix is the probability that a word is followed by a word with a given entity, if you have a entity Other then the probability tells you that the next word is most likely a word with the entity Other(look at table \ref{tab:Transmissionprobability}).
+\subsubsection{Transmission Probability Matrix }
+The Transmission Probability Matrix is the probability that a word is followed by a word with a given entity. If you have a entity Other then the probability tells you that the next word is most likely a word with the entity Other(look at table \ref{tab:Transmissionprobability}).
 \begin{equation}
 \resizebox{.9\textwidth}{!}{
 $
@@ -123,8 +122,8 @@ $
 $
 }
 \end{equation}
-The transmission probability matrix is in our case 5x5(number of entities*number of entities), this is because it shows the probability of the next word in a sentence given the current words entity.
-To make this transmission probability matrix we use the Table data structure from Google's guava library.
+The transmission probability matrix is in this case 5x5(number of entities*number of entities), which is because it shows the probability of the next word in a sentence given the current words entity.
+To make the Transmission Probability Matrix we use the table data structure from Google's guava library.
 \begin{table}[here]
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -142,14 +141,14 @@ Time & $\frac{2}{2}$ & $\frac{0}{2}$ & $\frac{0}{2}$ & $\frac{0}{2}$ & $\frac{0}
 Location & $\frac{1}{2}$ & $\frac{1}{2}$ & $\frac{0}{2}$ & $\frac{0}{2}$ & $\frac{0}{2}$ \\
 \hline
 \end{tabular}
-\caption{Transmission probability}
+\caption{Transmission Probability}
 \label{tab:Transmissionprobability}
 \end{table}
-
-\subsubsection{Hidden markov model}
-We started by looking into the Baum-Welch algorithm but did not quite understand how we where to implement it, so we went with the viterbi version of hidden markov model.
-To calculate the probability for each words entity in a sentence we are using a hidden markov model, the hidden markov model uses the start probability, emission probability and the transmission probability as input to calculate the entities for each word in a sentence. Since the training data set also contains sentences from the real world which means that the algorithm is trained to learn how a sentence is built up by specific words and entity sequences.
-Since our implementation of the hidden markov model identifies entities based on sentences the first word in every sentence is a special case. Note that no of the probability’s can be 0 it should be 0.0000000001 instead, because when you take the logarithm of 0 you will get negative infinity and the algorithm will give you wrong classifications.
+\clearpage
+\subsubsection{Hidden Markov Model}
+We started by looking into the Baum-Welch Algorithm, but did not quite understand how we could implement it, so we went ahead with The Viterbi Algorithm to tackle the Hidden Markov Model problem.
+To calculate the probability for each words entity in a sentence we are using a Hidden Markov Model. The Hidden Markov Model uses the Start Probability, Emission Probability and the Transmission Probability as input to calculate the entities for each word in a sentence. Since the training data set also contains sentences from the real world which means that the algorithm is trained to learn how a sentence is built up by specific words and entity sequences.
+Since our implementation of the hidden markov model identifies entities based on sentences the first word in every sentence is a special case. Note that none of the words probabilities can be zero as it needs to be 0.0000000001, because we use the logarithm of 2 to transfer stacking probabilies from a multiply operation into a simply add operation. Logarithm of zero gives us a negative infinity number which gives problems in certain parts of the code. Then transfer it back once we are done with all the various operations. We also presurve better decimal accuracy by doing it this way.
 \begin{equation}
 \resizebox{0.9\textwidth}{!}{
 $
@@ -157,7 +156,7 @@ P\textsubscript{entity}(word,1) = \log\textsubscript{2}(startProbFor(Entity)) - 
 $
 }
 \end{equation}
-The words entity is given by whcih entity is given the highest probability by the hidden markov model or the entity which has the lowest negative number in our case. To get the entities for the rest of the words in the sentence, we need to use the earlier words in the sentence entities. Based on the previously entities we need to find the entity path with the highest overall probability, to get the next words entity you use this equation:
+The words entity is given by which entity that has the highest probability by the hidden markov model or the entity which has the closest number to zero in our case. To get the entities for the rest of the words in the sentence, we need to use the earlier words in the sentence entities. Based on the previously entities we need to find the entity path with the highest overall probability, to get the next words entity you use this equation:
 \begin{equation}
 \begin{split}
 P\textsubscript{entity}(word,n)=P\textsubscript{emission}(Word,entity)+\\max(P\textsubscript{entity}(word,n-1)+P\textsubscript{transmission}(entity,sameEntity),\\P\textsubscript{otherEntity}(word,n-1)+P\textsubscript{transmission}(entity,otherEntity))
@@ -181,14 +180,15 @@ Person & -3.21 & -3.42 & -3.34 & -7.55\\
 Time & -4.33 & -4.22 & -4.12 & -8.34\\
 \hline
 \end{tabular}
-\caption{Table of words entity with hidden markov model}
+\caption{Table of words entity with Hidden Markov Model}
 \label{tab:Table of words entity with hidden markov model}
 \end{table}
-The table \ref{tab:Table of words entity with hidden markov model} shows how it chooses which entity each word should have the entity with the highest probability is bold to show how the entity path is trough a sentence.
+The table \ref{tab:Table of words entity with hidden markov model} shows how it chooses which entity each word should have the entity with the highest probability is bold to show how the entity path is through a sentence.
+\clearpage
 
 \subsection{Result}
-Our result is a name entity recognition system which identifies the different words entity based on previously words entity the sentence, by hidden markov model which bases the decisions on the start, emission and transmission probability.\\
-By using regex expressions we have tried to help the system identify the correct entity for the different words, we use the regex expressions to help us when the viterbi algorithm gives a word enity other. Because when the algorithm gives the enitity other it is because it is the entity which most often occur in texts. Then hopefully the regex expressions we have made can help us to identify more words with the right entity. We have made regex expressions to help us identify time, persons and Location entities. 
+Our result is a Name Entity Recognition system which identifies the different words entity based on previously words entity the sentence, by hidden markov model which bases the decisions on the start, emission and transmission probability.\\
+By using regex expressions we have tried to help the system identify the correct entity for the different words, but only so when the viterbi algorithm gives a word other as classification. Because when the algorithm gives the entity other it is because it is the entity which most frequently occur in texts. Hopefully the regex expressions we have made can help us to identify more words with the right entity. We have made regex expressions to help us identify time, persons and Location entities. 
 
 \subsection{Statistics}
 The statistics show both the error and correctness rate of our implementation of the viterbi algorithm.
@@ -213,13 +213,13 @@ Error rate & 0.159 & 0.098 & 0.154 & 0.120 \\
 \caption{Correct and Error rate from first run}
 \label{tab:Correct and Error rate from first run}
 \end{table}
-By looking at the correct and Error rate we can see that all of our articles got a better result than we hoped when we started, so we are happy with how the system runs and gives out results.
+By looking at the correct and error rate we can see that all of our articles got a better result than we hoped for when we started. We consider us happy with how the system runs and gives out results.
 
 \section{Evaluation}
-We both strongly agree with each other that we should have made the choice to either ask for help by the teaching assistants or to make the switch from the sequence modeling approach earlier in the project, because we found that the time frame was a bit short when we got started working with the project so late. Due to the late start we did not have much time to tweak the algorithm and program for better performance. We could also probably have made a cleaner code but since we experienced trouble with the time we prioritized to get the system up and running and working as it should rather than making the code cleaner and optimizing it. But overall we are happy with our project since all of our classifications are higher then we hoped when we started doing the project, and we both belive we have learned a lot by doing this project.
+We both strongly agree with each other that we should have made the choice to either ask for help by the teaching assistants or to make the switch from the sequence modeling approach earlier in the project, because we found that the time frame was a bit short when we got started working with the project so late. Due to the late start we did not have much time to tweak the algorithm and program for better performance. We could also probably have made a cleaner code but since we experienced trouble with the time we prioritized to get the system up and running and working as it should, rather than making the code cleaner and optimizing it, but overall we are happy with our project since all of our classifications are higher then we hoped when we started doing the project, and we both belive we have learned a lot by doing this project.
 
 \section{Conclusion}
-We have learned a lot about how to use a hidden markov model to help us find highest probability based on earlier observations. We have also learned that you should ask for help if you are stuck with a problem and can not get started with a project within reasonable time, it only leads to long nights before the due date. The program can be improved more by getting more training data set(s) or to make the training data set larger and make some more models which is run on the text to classify. Maybe use cross checking between the classification results if you classify by using more than one model and find the most likely entity based on the classification results. You can also improve the program by improving on the some of our regex expressions.
+We have learned a lot about how to use a Hidden Markov Model to help us find highest probability based on earlier observations. We have also learned that you should ask for help if you are stuck with a problem and can not get started with a project within reasonable time as it only leads to long nights before the due date. The program can be improved more by getting more training data set(s) from various sources and to make the training data set larger and make some more models which is run on the text to classify. Maybe use cross checking between the classification results if you classify by using more than one model and find the most likely entity based on the classification results. You can also improve the program by improving on the some of our regex expressions.
 
 \section{Bibliography}
 \begin{thebibliography}{9}
@@ -256,7 +256,7 @@ Dan Jurafsky, Christopher Manning
 HMM : Viterbi algorithm - a toy example
 \\\texttt{http://homepages.ulb.ac.be/~dgonze/TEACHING/viterbi.pdf}
 \end{thebibliography}
-
+\clearpage
 \section{Program Listings}
 To run this name entity recognition system you will need a IDE like eclipse, and you will also need to import the libraries guava-18.0.jar and jsoup-1.8.1.jar(you will get these jar files when you download the project from github\\
 https://github.com/johnolos/classify or when you receive it).\\
